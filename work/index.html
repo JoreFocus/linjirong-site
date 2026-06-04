@@ -12,36 +12,28 @@
       document.documentElement.classList.add('has-anim');
     }
   </script>
-  <!-- 凑近「品」字左下角那个口。它会自己讲故事。 -->
+  <!-- 「品」字本身是正常汉字,只在你凑近它左下口的时候,文件夹才出现。 -->
 </head>
 <body>
   <header class="site-nav">
     <a href="/" class="brand">linjirong</a>
     <nav class="nav-links">
       <a href="/">Home</a>
-      <a href="/work/" class="current" aria-label="作品">作<svg class="pin" viewBox="-4 -4 58 54" aria-hidden="true"><rect x="13" y="0" width="24" height="20"/><rect x="26" y="26" width="24" height="20"/><path d="M0,26 L8,26 L8,30 L24,30 L24,46 L0,46 Z"/></svg></a>
+      <a href="/work/" class="current">作品</a>
       <a href="/about/">About</a>
     </nav>
   </header>
 
   <main class="zuopin-stage">
     <a href="/work/inside/" class="zuopin-link" aria-label="打开作品文件夹">
-      <h1 class="zuopin-text">
-        <span class="char">作</span><span class="pin-3d">
-          <svg class="pin-outline" viewBox="-4 -4 58 54" aria-hidden="true">
-            <rect class="kou kou-top" x="13" y="0" width="24" height="20"/>
-            <rect class="kou kou-br" x="26" y="26" width="24" height="20"/>
-            <path class="kou kou-folder" d="M0,26 L8,26 L8,30 L24,30 L24,46 L0,46 Z"/>
-          </svg>
-          <span class="folder-3d" aria-hidden="true">
-            <span class="folder-paper p1"></span>
-            <span class="folder-paper p2"></span>
-            <span class="folder-paper p3"></span>
-            <span class="folder-flap"></span>
-          </span>
-        </span>
-      </h1>
-      <p class="zuopin-hint">凑近点 ↘</p>
+      <h1 class="zuopin-text">作<span class="pin-anchor">品<span class="folder-3d" aria-hidden="true">
+        <span class="folder-back"></span>
+        <span class="folder-paper p1"></span>
+        <span class="folder-paper p2"></span>
+        <span class="folder-paper p3"></span>
+        <span class="folder-front"></span>
+      </span></span></h1>
+      <p class="zuopin-hint">凑近左下 ↘</p>
     </a>
   </main>
 
