@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>成员知识包 · 大运乱创队</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=Source+Sans+3:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --paper:#EAE1CE; --ivory:#F7F1E3; --label-bg:#E0E1DA;
+  --t-title:#1A1914; --t-body:#3B392F; --t-aux:#857E6C;
+  --ink:#1E2740; --ink-soft:#2C3C60; --ink-line:rgba(30,39,64,.16);
+  --serif:'Source Serif 4',Georgia,'Songti SC',serif;
+  --sans:'Source Sans 3','PingFang SC',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{background:#cfc6b2;font-family:var(--serif);color:var(--t-body);-webkit-font-smoothing:antialiased;}
+
+/* ── picker bar ── */
+#picker{
+  position:sticky;top:0;z-index:100;
+  background:var(--ink);border-bottom:2px solid rgba(255,255,255,.08);
+  padding:16px 32px;
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+}
+#picker .label{
+  font-family:var(--sans);font-weight:600;font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;color:#9AA6BF;
+  margin-right:4px;white-space:nowrap;
+}
+.pname{
+  font-family:var(--serif);font-weight:500;font-size:17px;color:#D8D2C3;
+  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);
+  border-radius:7px;padding:9px 20px;cursor:pointer;transition:all .2s;
+  white-space:nowrap;
+}
+.pname:hover{background:rgba(175,192,220,.18);color:#F5EFE1;border-color:rgba(175,192,220,.35);}
+.pname.active{background:var(--ink-soft);color:#F5EFE1;border-color:transparent;}
+
+/* ── page shell ── */
+.page{max-width:860px;margin:0 auto;background:var(--paper);padding:72px 88px 100px;box-shadow:0 2px 30px rgba(0,0,0,.16);}
+
+/* ── mast ── */
+.mast{display:flex;justify-content:space-between;align-items:baseline;
+  font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--t-aux);padding-bottom:12px;border-bottom:1px solid var(--ink-line);margin-bottom:44px;}
+.mast .pub{color:var(--t-title);}
+
+/* ── member header ── */
+.mhead{display:none;}
+.mhead.show{display:block;}
+.mhead .role-tag{
+  display:inline-block;font-family:var(--sans);font-weight:600;font-size:12px;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);
+  background:var(--label-bg);border-radius:5px;padding:5px 12px;margin-bottom:22px;
+}
+.mhead h1{
+  font-family:var(--serif);font-weight:600;color:var(--t-title);
+  font-size:52px;line-height:1.12;letter-spacing:-.01em;margin-bottom:8px;
+}
+.mhead .sub{font-size:21px;color:var(--t-aux);margin-bottom:40px;line-height:1.5;}
+.divider{height:2px;background:var(--ink);margin:44px 0 36px;}
+
+/* ── section headings ── */
+h2.sh{
+  font-family:var(--serif);font-weight:600;color:var(--t-title);
+  font-size:30px;margin:52px 0 16px;display:flex;align-items:center;gap:14px;
+  letter-spacing:-.005em;
+}
+h2.sh .badge{
+  font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ivory);background:var(--ink-soft);
+  border-radius:5px;padding:4px 10px;
+}
+h2.sh .badge.common{background:var(--t-aux);}
+
+/* ── body text ── */
+p.body{font-size:18px;line-height:1.78;color:var(--t-body);margin-bottom:16px;}
+p.body b{font-weight:600;color:var(--t-title);}
+p.body em{font-style:normal;color:var(--ink-soft);border-bottom:1.5px dotted var(--ink-soft);}
+
+/* ── key number row ── */
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin:28px 0;}
+.nbox{padding:18px 22px;border-left:1px solid var(--ink-line);}
+.nbox:first-child{border-left:none;padding-left:0;}
+.nbox .n{font-family:var(--serif);font-weight:600;color:var(--ink-soft);font-size:46px;line-height:1;letter-spacing:-.02em;}
+.nbox .n small{font-size:22px;font-weight:400;}
+.nbox .c{font-size:15px;color:var(--t-body);margin-top:10px;line-height:1.5;}
+.nbox .c .k{display:block;font-family:var(--sans);font-weight:600;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--t-aux);margin-bottom:5px;}
+
+/* ── list ── */
+ul.kl{list-style:none;margin:14px 0 22px;}
+ul.kl li{position:relative;padding-left:32px;margin-bottom:16px;font-size:18px;line-height:1.65;color:var(--t-body);}
+ul.kl li::before{content:"—";position:absolute;left:0;color:var(--ink-soft);font-family:var(--serif);}
+ul.kl li b{font-weight:600;color:var(--t-title);}
+ul.kl li .s{display:block;font-size:15px;color:var(--t-aux);margin-top:4px;line-height:1.5;}
+
+/* ── table ── */
+table.kt{width:100%;border-collapse:collapse;margin:18px 0;}
+table.kt th{font-family:var(--sans);font-weight:600;text-align:left;font-size:12px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--t-aux);
+  padding:0 16px 12px;border-bottom:1.5px solid var(--ink);}
+table.kt td{font-size:16px;color:var(--t-body);padding:14px 16px;
+  border-bottom:1px solid var(--ink-line);line-height:1.6;vertical-align:top;}
+table.kt td b{font-weight:600;color:var(--t-title);}
+table.kt td.mono{font-family:var(--mono);color:var(--ink-soft);font-size:14px;}
+
+/* ── Q&A ── */
+.qa .q{
+  font-family:var(--serif);font-weight:600;color:var(--t-title);
+  font-size:19px;margin:28px 0 10px;line-height:1.5;
+}
+.qa .q::before{content:"Q";font-family:var(--mono);font-size:13px;color:var(--ivory);
+  background:var(--ink-soft);border-radius:5px;padding:3px 8px;margin-right:10px;vertical-align:2px;}
+.qa .a{font-size:16.5px;color:var(--t-body);line-height:1.75;padding-left:4px;}
+.qa .a::before{content:"A";font-family:var(--mono);font-size:13px;color:var(--ink-soft);
+  border:1px solid var(--ink-line);border-radius:5px;padding:3px 8px;margin-right:10px;vertical-align:2px;}
+
+/* ── tip box ── */
+.tip{background:var(--ivory);border:1px solid var(--ink-line);border-radius:8px;
+  padding:20px 26px;margin:24px 0;font-size:16px;line-height:1.7;color:var(--t-body);}
+.tip b{color:var(--ink-soft);font-weight:600;}
+
+/* ── foot ── */
+.foot{margin-top:70px;padding-top:18px;border-top:1px solid var(--ink-line);
+  font-family:var(--mono);font-size:11px;color:var(--t-aux);letter-spacing:.04em;
+  display:flex;justify-content:space-between;}
+
+@media(max-width:680px){
+  #picker{padding:12px 16px;gap:8px;}
+  .pname{font-size:15px;padding:8px 14px;}
+  .page{padding:44px 22px 70px;}
+  .mhead h1{font-size:36px;}
+  .nums{grid-template-columns:repeat(2,1fr);}
+  .nbox{padding:14px 16px;}
+  h2.sh{font-size:24px;}
+  p.body,ul.kl li{font-size:16px;}
+  table.kt td{font-size:14px;}
+}
+</style>
+</head>
+<body>
+
+<div id="picker">
+  <span class="label">选择成员</span>
+  <button class="pname active" onclick="show('lin')">林佶荣</button>
+  <button class="pname" onclick="show('xie')">谢羿萌</button>
+  <button class="pname" onclick="show('xian')">冼嘉俊</button>
+  <button class="pname" onclick="show('liang')">梁芷荣</button>
+  <button class="pname" onclick="show('zhong')">钟建为</button>
+  <button class="pname" onclick="show('yang')">杨宇浩</button>
+</div>
+
+<div class="page">
+  <div class="mast">
+    <span class="pub">大运乱创队 · 成员知识包</span>
+    <span>数字遗产与生命对话系统 · v3.1</span>
+  </div>
+
+  <!-- ===== 林佶荣 ===== -->
+  <div class="mhead show" id="m-lin">
+    <div class="role-tag">项目统筹 · 文案主笔</div>
+    <h1>林佶荣</h1>
+    <p class="sub">你负责整体协调和商业计划书的总撰写。这份知识包会让你对项目每个板块都有足够的掌握，能在路演现场应答任何方向的提问。</p>
+    <div class="divider"></div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>项目是什么</h2>
+    <p class="body"><b>一句话：</b>用 AI 学习一个人十几年的聊天记录、日记、语音，复原出他独特的说话方式和思维习惯，让你能和这个"数字人格"对话——就像和他本人聊天一样。</p>
+    <p class="body">它有三个使用场景：① 亲人去世后，留住他的"声音"；② 自我认知——让一个最了解你的"镜像"帮你突破思维瓶颈；③ 企业员工心理健康服务。</p>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>五个关键数字</h2>
+    <div class="nums">
+      <div class="nbox"><div class="n">3.1<small>亿</small></div><div class="c"><span class="k">老龄人口</span>60岁以上，占总人口22%</div></div>
+      <div class="nbox"><div class="n">800<small>亿</small></div><div class="c"><span class="k">成长市场</span>个人发展教练市场规模</div></div>
+      <div class="nbox"><div class="n">3000<small>万</small></div><div class="c"><span class="k">核心用户</span>25-45岁知识工作者</div></div>
+      <div class="nbox"><div class="n">500<small>-600万</small></div><div class="c"><span class="k">首轮融资</span>养11人团队18个月</div></div>
+    </div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>商业模式（怎么赚钱）</h2>
+    <ul class="kl">
+      <li><b>个人订阅</b>（B2C）<span class="s">免费/标准¥99/VIP¥299 按月收费，主力收入来源</span></li>
+      <li><b>家族套餐</b>（B2C2B）<span class="s">一家人共用，¥1399–5999/年，留存亲人记忆</span></li>
+      <li><b>机构采购</b>（B2B）<span class="s">企业EAP、高校、医院，¥5–100万/年，利润最高</span></li>
+      <li><b>技术授权</b>（B2B2C）<span class="s">向VR厂商等开放API，按成交额抽成15–25%</span></li>
+    </ul>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>四大竞争壁垒</h2>
+    <ul class="kl">
+      <li><b>数据粘性</b><span class="s">用得越久、存的数据越多，越离不开我们</span></li>
+      <li><b>技术壁垒</b><span class="s">专属的个性化LLM微调技术栈</span></li>
+      <li><b>生态合作</b><span class="s">与硬件厂商、心理机构的深度绑定</span></li>
+      <li><b>网络效应</b><span class="s">家族多人互联，共同维护数字记忆</span></li>
+    </ul>
+
+    <div class="divider"></div>
+    <h2 class="sh"><span class="badge">统筹专项</span>你要掌握的全局视角</h2>
+    <p class="body">作为统筹，你是路演现场最容易被追问"整体逻辑"的人。评委会问：<b>为什么是你们？这件事的核心价值是什么？</b></p>
+    <ul class="kl">
+      <li><b>项目逻辑主线：</b>社会趋势（老龄化+心理需求）→ 痛点（情感断层）→ 技术解法（AI人格复原）→ 商业变现（订阅+机构）→ 护城河（数据粘性）</li>
+      <li><b>为什么现在做：</b>国产大模型（文心一言、通义千问）2023年后成熟，个性化微调成本大幅下降，时间窗口刚刚打开</li>
+      <li><b>为什么是学生团队：</b>不重造轮子、站在成熟技术肩膀上；四线城市低成本团队；先验证再扩张</li>
+    </ul>
+
+    <div class="qa">
+      <p class="q">你们这个项目的核心竞争力到底是什么？</p>
+      <p class="a">不是某项单独技术，而是把「成长陪伴 + 情感慰藉 + 数字遗产」打通成一整套。市场上没有人这样组合，而且我们靠数据粘性形成护城河——用得越久越离不开。</p>
+      <p class="q">这个项目最大的风险是什么？</p>
+      <p class="a">伦理监管风险。我们的应对是：成立独立伦理委员会、数据由第三方托管、明确标注"数字模拟"。这是我们预算里专门留了50万法务费的原因。</p>
+      <p class="q">学生团队有没有能力落地？</p>
+      <p class="a">我们不从零建，而是用文心一言等成熟API组装。第一阶段只做文字聊天的MVP，四个月内可跑通。这是最稳妥的方式。</p>
+    </div>
+  </div>
+
+  <!-- ===== 谢羿萌 ===== -->
+  <div class="mhead" id="m-xie">
+    <div class="role-tag">市场调研 · 用户分析</div>
+    <h1>谢羿萌</h1>
+    <p class="sub">你负责市场数据和用户画像。路演时你是「数据的来源」，评委最可能问你：这个市场真的存在吗？数据从哪来？用户真的会买单吗？</p>
+    <div class="divider"></div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>项目是什么</h2>
+    <p class="body"><b>一句话：</b>用 AI 学习一个人十几年的社交数据，复原他的说话方式和思维习惯，让用户能和这个"数字人格"对话。三个场景：留住逝去亲人的"声音"、自我认知镜像、企业员工心理服务。</p>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>商业模式与竞争壁垒</h2>
+    <ul class="kl">
+      <li><b>四条收入</b><span class="s">个人订阅 · 家族套餐 · 机构采购 · 技术授权</span></li>
+      <li><b>核心护城河</b><span class="s">数据粘性（用得越久越离不开）+ 技术壁垒</span></li>
+      <li><b>首轮融资</b><span class="s">500–600万，养11人团队18个月</span></li>
+    </ul>
+
+    <div class="divider"></div>
+    <h2 class="sh"><span class="badge">市场专项</span>你要熟记的数据与来源</h2>
+    <table class="kt">
+      <thead><tr><th style="width:36%">数据</th><th style="width:30%">来源/背景</th><th>解读方式</th></tr></thead>
+      <tbody>
+        <tr><td><b>60岁以上老人3.1亿，占22%</b></td><td class="mono">国家统计局2024年末数据</td><td>说明「记忆留存」是越来越大的刚需</td></tr>
+        <tr><td><b>个人成长市场800亿</b></td><td class="mono">2025年行业报告估算</td><td>说明用户愿意为「更了解自己」付钱</td></tr>
+        <tr><td><b>核心用户3000万</b></td><td class="mono">25–45岁知识工作者估算</td><td>有十年以上数字足迹、付费能力强</td></tr>
+        <tr><td><b>1亿户家庭有留存需求</b></td><td class="mono">40–65岁有老人的家庭估算</td><td>家族联合出资，客单价高</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="sh"><span class="badge">市场专项</span>三类用户画像要点</h2>
+    <ul class="kl">
+      <li><b>中青年个人成长（主力）</b><span class="s">25–45岁，有焦虑、有成长欲，把产品当私人教练；手机里存着海量个人数据；愿意月付¥99–299</span></li>
+      <li><b>中年家庭纪念（情感型）</b><span class="s">40–65岁，亲人已去世或年迈；家庭决策，多人分摊费用；年付¥500–1399</span></li>
+      <li><b>企业机构（高利润）</b><span class="s">HR部门、高校心理中心、临终关怀机构；预算充足，年付¥5–100万</span></li>
+    </ul>
+
+    <h2 class="sh"><span class="badge">市场专项</span>核心痛点（三选一，能展开讲）</h2>
+    <ul class="kl">
+      <li><b>情感断层：</b>照片视频是静态的，人走了就真的什么都没有了；时间会让记忆模糊，这个需求是真实存在的</li>
+      <li><b>自我认知局限：</b>传统心理咨询500–1000元/次，效果慢；AI教练24小时在线、完全了解你</li>
+      <li><b>数据被浪费：</b>十几年的聊天记录、日记里藏着巨大的自我洞察，但从没被系统整理过</li>
+    </ul>
+
+    <div class="qa">
+      <p class="q">这个数据是你们自己编的吧？市场真的这么大？</p>
+      <p class="a">老龄化数据来自国家统计局2024年发布的人口数据，是官方公开数据。个人成长市场的800亿是行业研究机构的估算值，我们在计划书里注明了是乐观场景。这两个数字都是独立存在的市场，我们是在这两个市场的叠加处找到切入点。</p>
+      <p class="q">用户真的愿意为这个付费吗？</p>
+      <p class="a">有几个参照：知识付费（得到、樊登）已经验证了中国用户愿意为"更了解自己"付费；心理咨询市场年均增速超过20%；我们的定价¥99/月比一次咨询便宜很多，门槛低。我们会先用最小可行产品验证，用数据说话。</p>
+      <p class="q">目标用户3000万是怎么算出来的？</p>
+      <p class="a">按25–45岁城镇知识工作者估算，有稳定收入、有个人成长意愿、手机里有十年以上社交数据。这是保守估算，实际上家庭纪念场景再加进来，潜在人群超过1亿。</p>
+    </div>
+  </div>
+
+  <!-- ===== 冼嘉俊 ===== -->
+  <div class="mhead" id="m-xian">
+    <div class="role-tag">产品方案 · 技术规划</div>
+    <h1>冼嘉俊</h1>
+    <p class="sub">你负责产品功能设计和技术可行性。评委最可能问你：这个技术上真的能做到吗？多久能做出来？安全吗？你不需要深懂代码，但要会把技术说得让外行也明白。</p>
+    <div class="divider"></div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>项目是什么</h2>
+    <p class="body"><b>一句话：</b>用 AI 学习一个人十几年的社交数据，复原他的说话方式，让用户能和这个"数字人格"对话。三个场景：留住逝去亲人、自我认知、企业员工服务。</p>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>商业模式与关键数字</h2>
+    <ul class="kl">
+      <li><b>四条收入：</b>个人订阅 · 家族套餐 · 机构采购 · 技术授权</li>
+      <li><b>核心数字：</b>3.1亿老人、800亿市场、3000万核心用户</li>
+      <li><b>融资需求：</b>500–600万首轮，养11人团队18个月</li>
+    </ul>
+
+    <div class="divider"></div>
+    <h2 class="sh"><span class="badge">产品专项</span>四大功能模块（用大白话记）</h2>
+    <ul class="kl">
+      <li><b>第一步：收集数据</b><span class="s">从微信、微博等导入聊天记录和日记，全程加密，数据不外流</span></li>
+      <li><b>第二步：建"人格模型"</b><span class="s">让AI专门学这个人怎么说话、爱用什么词、怎么思考——这一步叫"大模型微调"，是核心技术</span></li>
+      <li><b>第三步：能互动</b><span class="s">文字聊天先跑通，再加语音，最终可做视频（连表情都还原）</span></li>
+      <li><b>第四步：越用越像</b><span class="s">系统定期做深度访谈、用户可纠错，模型不断进化</span></li>
+    </ul>
+
+    <h2 class="sh"><span class="badge">产品专项</span>技术名词速查（被问到时用）</h2>
+    <table class="kt">
+      <thead><tr><th>名词</th><th>大白话解释</th></tr></thead>
+      <tbody>
+        <tr><td><b>大语言模型（LLM）</b></td><td>像ChatGPT、文心一言这样能理解和生成文字的AI，是我们的核心引擎</td></tr>
+        <tr><td><b>模型微调（Fine-tuning）</b></td><td>在现成AI上再喂某人的专属数据，让它"专门学"这个人说话，不用从头训练，省时省钱</td></tr>
+        <tr><td><b>向量数据库</b></td><td>特殊的记忆仓库，能按"意思相近"快速检索，让AI随时找到相关记忆</td></tr>
+        <tr><td><b>端到端加密</b></td><td>数据从手机到服务器全程锁住，中间任何人（包括我们）看不到内容</td></tr>
+        <tr><td><b>MVP（最小可行产品）</b></td><td>先做最简单能用的版本验证市场，再慢慢加功能</td></tr>
+        <tr><td><b>API接口</b></td><td>调用别家AI功能的"插座"，我们用国产大模型API，不用自己造模型</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="sh"><span class="badge">产品专项</span>三阶段落地时间线</h2>
+    <ul class="kl">
+      <li><b>第1–4个月：文字基础版</b><span class="s">支持文字对话，接入微信/微博数据，完成基础微调。这是MVP。</span></li>
+      <li><b>第5–8个月：语音+深度访谈</b><span class="s">加语音交互，让系统更懂用户，建立纠错反馈闭环</span></li>
+      <li><b>第9–16个月：视频+扩展</b><span class="s">接入视频生成，探索VR/AR，开放硬件API</span></li>
+    </ul>
+
+    <div class="qa">
+      <p class="q">AI模仿出来的真的像本人，还是普通聊天机器人？</p>
+      <p class="a">关键差异是数据。普通机器人用的是通用资料，我们用的是这个人十几年真实的文字，专门训练，所以语气、口头禅、思维方式会明显更像本人。我们不追求100%完美，先把文字对话做到"神似"，再逐步加语音和视频。</p>
+      <p class="q">技术上你们真的能做到吗？有没有在校学生做出来过类似的东西？</p>
+      <p class="a">我们不重新造轮子。用文心一言、通义千问这些现成国产大模型的API，加上开源的向量数据库，把它们组装成专门用于"还原一个人"的系统。文字对话版在四个月内可以跑通，这是一个可实现的技术目标。</p>
+      <p class="q">数据安全怎么保证？会不会泄露？</p>
+      <p class="a">三层保护：第一，端到端加密，数据优先在本地处理；第二，用户数据交第三方独立机构托管；第三，我们承诺不出售数据，这会写进用户协议并接受伦理委员会监督。</p>
+    </div>
+  </div>
+
+  <!-- ===== 梁芷荣 ===== -->
+  <div class="mhead" id="m-liang">
+    <div class="role-tag">商业模式 · 财务规划</div>
+    <h1>梁芷荣</h1>
+    <p class="sub">你负责商业模式设计和财务预测。评委最可能问你：数字怎么算的？能盈利吗？为什么要融这么多钱？你要能用白话解释每一个财务数字背后的逻辑。</p>
+    <div class="divider"></div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>项目是什么</h2>
+    <p class="body"><b>一句话：</b>用AI学习一个人的社交数据，复原他的人格，让用户能和"数字人格"对话。三个场景：留住逝去亲人、自我认知、企业服务。</p>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>市场与竞争概况</h2>
+    <ul class="kl">
+      <li><b>三大数字：</b>3.1亿老龄人口、800亿个人成长市场、3000万核心用户</li>
+      <li><b>核心护城河：</b>数据粘性 · 技术壁垒 · 生态合作 · 网络效应</li>
+    </ul>
+
+    <div class="divider"></div>
+    <h2 class="sh"><span class="badge">财务专项</span>四条收入的逻辑</h2>
+    <table class="kt">
+      <thead><tr><th style="width:26%">渠道</th><th style="width:28%">定价</th><th>逻辑</th></tr></thead>
+      <tbody>
+        <tr><td><b>个人订阅</b>（B2C）</td><td class="mono">¥99–299/月</td><td>规模大、获客成本低，是主力收入；免费版做获客漏斗</td></tr>
+        <tr><td><b>家族套餐</b>（B2C2B）</td><td class="mono">¥1399–5999/年</td><td>多人分摊、客单价高、续费率稳定</td></tr>
+        <tr><td><b>机构采购</b>（B2B）</td><td class="mono">¥5–100万/年</td><td>单价最高、利润最厚，但销售周期长</td></tr>
+        <tr><td><b>技术授权</b>（B2B2C）</td><td class="mono">成交额15–25%</td><td>轻资产、边际成本低，随生态扩大自然增长</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="sh"><span class="badge">财务专项</span>五年预测的假设基础</h2>
+    <ul class="kl">
+      <li><b>用户增长假设：</b>第一年5万 → 第三年200万 → 第五年1000万。靠口碑+B2B拉动，符合同类产品增长曲线。</li>
+      <li><b>ARPU假设：</b>每位付费用户月均付¥80–150，折算年均约¥1200。低于市面同类产品定价。</li>
+      <li><b>B2B假设：</b>第一年10家机构、平均年费¥10万；第五年1000家机构。</li>
+      <li><b>主动说是乐观场景：</b>评委问时主动承认"这是乐观假设"，加分。</li>
+    </ul>
+
+    <h2 class="sh"><span class="badge">财务专项</span>单位经济（最重要的财务逻辑）</h2>
+    <div class="tip">
+      <b>获客成本（CAC）：</b>拉来一个用户花¥200<br>
+      <b>用户年价值（LTV）：</b>一个标准用户一年贡献¥1200<br>
+      <b>LTV ÷ CAC = 6倍</b> → 健康可持续（行业标准是3倍以上即可）
+    </div>
+
+    <h2 class="sh"><span class="badge">财务专项</span>融资预算分配</h2>
+    <table class="kt">
+      <thead><tr><th>项目</th><th style="text-align:right">金额</th></tr></thead>
+      <tbody>
+        <tr><td><b>研发团队人力（18个月）</b></td><td class="mono" style="text-align:right">180万</td></tr>
+        <tr><td>服务器与云资源</td><td class="mono" style="text-align:right">80万</td></tr>
+        <tr><td>市场推广与获客</td><td class="mono" style="text-align:right">100万</td></tr>
+        <tr><td>法务与伦理顾问</td><td class="mono" style="text-align:right">50万</td></tr>
+        <tr><td>运营杂项与储备</td><td class="mono" style="text-align:right">90–190万</td></tr>
+        <tr><td><b>合计</b></td><td class="mono" style="text-align:right"><b>500–600万</b></td></tr>
+      </tbody>
+    </table>
+
+    <div class="qa">
+      <p class="q">五年做到4亿营收，这个数字是不是太乐观了？</p>
+      <p class="a">是乐观场景，我们在计划书里也明确注明了这一点。保守场景下，第五年我们预计500万用户、营收约2亿。但路演展示乐观场景有助于说明项目天花板，投资人和评委在判断时都会把它当参考上限，而不是承诺值。</p>
+      <p class="q">首年只有300万营收，为什么要融500–600万？</p>
+      <p class="a">这笔钱不只是撑第一年，而是撑18个月的产品研发和市场验证。第一年主要是花钱建产品、获取种子用户、验证商业模式，第二年才开始规模化盈利。这是标准的互联网创业节奏：先烧钱验证，再融资扩张。</p>
+      <p class="q">你们的LTV/CAC是怎么算出来的？</p>
+      <p class="a">CAC按¥200计算，是参考同类内容订阅产品（知识付费类）的平均获客成本，通过小红书、知乎内容获客比付费投放便宜很多。LTV按标准版¥99/月、平均留存12个月计算约¥1200。这两个数字都是参考行业数据的保守估算。</p>
+    </div>
+  </div>
+
+  <!-- ===== 钟建为 ===== -->
+  <div class="mhead" id="m-zhong">
+    <div class="role-tag">路演呈现 · PPT制作</div>
+    <h1>钟建为</h1>
+    <p class="sub">你和杨宇浩共同负责路演的视觉呈现。你主要负责PPT制作。评委可能问你们关于项目任何板块的内容，这份知识包给你打基础，让你能自信地应对。</p>
+    <div class="divider"></div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>项目是什么</h2>
+    <p class="body"><b>一句话：</b>用AI学习一个人十几年的社交数据，复原他的说话方式和思维习惯，让用户能和这个"数字人格"对话。三个场景：留住逝去亲人的"声音"、自我认知、企业员工心理服务。</p>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>五个关键数字</h2>
+    <div class="nums">
+      <div class="nbox"><div class="n">3.1<small>亿</small></div><div class="c"><span class="k">老龄人口</span>占总人口22%</div></div>
+      <div class="nbox"><div class="n">800<small>亿</small></div><div class="c"><span class="k">成长市场</span>2025年规模</div></div>
+      <div class="nbox"><div class="n">6<small>倍</small></div><div class="c"><span class="k">LTV/CAC</span>健康投产比</div></div>
+      <div class="nbox"><div class="n">500<small>-600万</small></div><div class="c"><span class="k">融资需求</span>首轮目标</div></div>
+    </div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>商业模式与竞争壁垒</h2>
+    <ul class="kl">
+      <li><b>四条收入：</b>个人订阅 · 家族套餐 · 机构采购 · 技术授权</li>
+      <li><b>四重护城河：</b>数据粘性 · 技术壁垒 · 生态合作 · 网络效应</li>
+    </ul>
+
+    <div class="divider"></div>
+    <h2 class="sh"><span class="badge">路演专项</span>25页PPT结构速记</h2>
+    <ul class="kl">
+      <li><b>第1页：</b>封面（团队+项目名）</li>
+      <li><b>第2页：</b>引言（核心理念）</li>
+      <li><b>第3页：</b>目录</li>
+      <li><b>第4–7页：</b>市场（规模→痛点→用户）</li>
+      <li><b>第8–11页：</b>产品与技术（功能→技术栈→MVP）</li>
+      <li><b>第12–15页：</b>商业模式（盈利→财务→融资）</li>
+      <li><b>第16–17页：</b>竞争与护城河</li>
+      <li><b>第18–21页：</b>营销运营与风险</li>
+      <li><b>第22–23页：</b>社会影响与路线图</li>
+      <li><b>第24页：</b>团队分工</li>
+      <li><b>第25页：</b>结语"永恒"</li>
+    </ul>
+
+    <h2 class="sh"><span class="badge">路演专项</span>路演操作要点</h2>
+    <ul class="kl">
+      <li>演讲共<b>10分钟</b>，讲演约7.5分钟，问答约2.5分钟</li>
+      <li>翻页：方向键或触屏左右滑动；ESC可看缩略图全览</li>
+      <li>最底部有<b>进度条</b>，可看整体进度</li>
+      <li>现场用<b>离线HTML版</b>，断网也能完美放映，不依赖网络</li>
+    </ul>
+
+    <div class="qa">
+      <p class="q">为什么你们的PPT用的是这种古书风格？</p>
+      <p class="a">这是我们有意选择的——项目本身关于生命记忆、人文情怀，复古书卷的质感和"数字遗产"的主题高度契合。简洁克制的排版也符合学术路演的场合，避免过于花哨分散注意力。</p>
+      <p class="q">你们PPT有多少页？</p>
+      <p class="a">25页，覆盖市场分析、产品技术、商业模式、竞争分析、营销运营和社会影响六个板块，最后有团队分工页和结语。</p>
+    </div>
+  </div>
+
+  <!-- ===== 杨宇浩 ===== -->
+  <div class="mhead" id="m-yang">
+    <div class="role-tag">路演呈现 · 讲稿撰写</div>
+    <h1>杨宇浩</h1>
+    <p class="sub">你和钟建为共同负责路演呈现，你主要负责讲稿。你最了解整个路演的叙事逻辑，评委可能问你关于演讲内容的任何问题。</p>
+    <div class="divider"></div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>项目是什么</h2>
+    <p class="body"><b>一句话：</b>用AI学习一个人十几年的社交数据，复原他的说话方式，让用户能和"数字人格"对话。三个场景：留住逝去亲人、自我认知、企业员工服务。</p>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>五个关键数字</h2>
+    <div class="nums">
+      <div class="nbox"><div class="n">3.1<small>亿</small></div><div class="c"><span class="k">老龄人口</span>占总人口22%</div></div>
+      <div class="nbox"><div class="n">800<small>亿</small></div><div class="c"><span class="k">成长市场</span>2025年规模</div></div>
+      <div class="nbox"><div class="n">6<small>倍</small></div><div class="c"><span class="k">LTV/CAC</span>健康投产比</div></div>
+      <div class="nbox"><div class="n">500<small>-600万</small></div><div class="c"><span class="k">融资需求</span>首轮目标</div></div>
+    </div>
+
+    <h2 class="sh"><span class="badge common">全员基础</span>商业模式与护城河</h2>
+    <ul class="kl">
+      <li><b>四条收入：</b>个人订阅 · 家族套餐 · 机构采购 · 技术授权</li>
+      <li><b>四重护城河：</b>数据粘性 · 技术壁垒 · 生态合作 · 网络效应</li>
+    </ul>
+
+    <div class="divider"></div>
+    <h2 class="sh"><span class="badge">讲稿专项</span>演讲主线逻辑（背住这条线）</h2>
+    <p class="body"><b>开场场景</b>（亲人离去只剩照片）→ <b>核心理念</b>（肉身消亡，思想永续）→ <b>市场证明</b>（3.1亿老人 + 3大痛点）→ <b>产品方案</b>（四步复原人格）→ <b>商业逻辑</b>（四条收入 + 6倍投产比）→ <b>竞争优势</b>（四重护城河）→ <b>收尾</b>（一字：永恒）</p>
+
+    <h2 class="sh"><span class="badge">讲稿专项</span>时间节奏（10分钟总控）</h2>
+    <table class="kt">
+      <thead><tr><th>板块</th><th style="text-align:right">累计时间</th></tr></thead>
+      <tbody>
+        <tr><td>开场 + 理念（第1–3页）</td><td class="mono" style="text-align:right">0:00 → 1:00</td></tr>
+        <tr><td>市场（第4–7页）</td><td class="mono" style="text-align:right">1:00 → 2:45</td></tr>
+        <tr><td>产品与技术（第8–11页）</td><td class="mono" style="text-align:right">2:45 → 4:15</td></tr>
+        <tr><td>商业模式（第12–15页）</td><td class="mono" style="text-align:right">4:15 → 5:45</td></tr>
+        <tr><td>竞争（第16–17页）</td><td class="mono" style="text-align:right">5:45 → 6:20</td></tr>
+        <tr><td>营销运营风险（第18–21页）</td><td class="mono" style="text-align:right">6:20 → 7:00</td></tr>
+        <tr><td>社会意义 + 结语（第22–25页）</td><td class="mono" style="text-align:right">7:00 → 7:30</td></tr>
+        <tr><td><b>问答</b></td><td class="mono" style="text-align:right">7:30 → 10:00</td></tr>
+      </tbody>
+    </table>
+
+    <h2 class="sh"><span class="badge">讲稿专项</span>最容易被问到的8个问题（要能随口回答）</h2>
+    <div class="qa">
+      <p class="q">让逝者"复活"对话，伦理上没问题吗？</p>
+      <p class="a">我们的定位是"陪伴与缅怀"，不是"替代"。产品有引导机制鼓励健康面对失去，并成立独立伦理委员会。技术帮人更好地告别，而不是逃避。</p>
+      <p class="q">数据安全怎么保证？</p>
+      <p class="a">端到端加密 + 第三方托管 + 承诺不出售。三层保护。</p>
+      <p class="q">AI能真的像那个人吗？</p>
+      <p class="a">用的是那个人十几年真实的文字数据专门训练，不是通用机器人。不追求100%完美，先做到文字"神似"。</p>
+      <p class="q">大厂来做你们怎么竞争？</p>
+      <p class="a">大厂对伦理敏感领域最谨慎，这给了我们时间窗口。我们靠数据粘性和先发优势，必要时被大厂收购也是成功。</p>
+      <p class="q">用户真的会付费吗？</p>
+      <p class="a">个人成长付费市场800亿已经验证了需求。我们用MVP先验证，不盲目扩张。</p>
+      <p class="q">学生团队能落地吗？</p>
+      <p class="a">不重造轮子，用现成国产大模型API组装。文字版四个月可跑通。</p>
+      <p class="q">数据合法吗？</p>
+      <p class="a">只在用户本人明确授权下导出其自身数据，专门留了50万法务预算确保合规。</p>
+      <p class="q">5年4亿是不是吹牛？</p>
+      <p class="a">这是乐观场景，我们主动说明。保守估算第五年2亿。目的是展示天花板，不是承诺。</p>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>大运乱创队 · 成员知识包 · 法公2405班</span>
+    <span>数字遗产与生命对话系统 v3.1</span>
+  </div>
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.mhead').forEach(function(el){ el.classList.remove('show'); });
+  document.querySelectorAll('.pname').forEach(function(btn){ btn.classList.remove('active'); });
+  var el = document.getElementById('m-'+id);
+  if(el) el.classList.add('show');
+  var map = {lin:0,xie:1,xian:2,liang:3,zhong:4,yang:5};
+  var btns = document.querySelectorAll('.pname');
+  if(map[id]!==undefined && btns[map[id]]) btns[map[id]].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
