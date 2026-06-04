@@ -7,6 +7,11 @@
   <meta name="description" content="关于林骥蓉(linjirong)— 独立开发者、内容创作者、嘉应学院大学生。">
   <link rel="stylesheet" href="/assets/css/site.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='82' font-size='90' font-family='-apple-system,sans-serif'%3E%E5%93%81%3C/text%3E%3C/svg%3E">
+  <script>
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('has-anim');
+    }
+  </script>
 </head>
 <body>
   <header class="site-nav">
@@ -24,19 +29,19 @@
       <p class="tagline">这页的真正版本还在写。先放轮廓,免得空着。</p>
     </section>
 
-    <section>
-      <h2>在做的事</h2>
+    <section data-reveal>
+      <h2 class="section-title">在做的事</h2>
       <p>Puffie IP、AI 应用、内容副业;把自己活成一个复利系统。</p>
     </section>
 
-    <section>
-      <h2>所在</h2>
+    <section data-reveal>
+      <h2 class="section-title">所在</h2>
       <p>广东梅州 · 嘉应学院 · 25IP 训练营。</p>
     </section>
 
-    <section>
-      <h2>联系</h2>
-      <p>linjirong.com</p>
+    <section data-reveal>
+      <h2 class="section-title">联系</h2>
+      <p>linjirong.com · GitHub @JoreFocus</p>
     </section>
   </main>
 
@@ -46,5 +51,8 @@
       <span>linjirong.com</span>
     </div>
   </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
 </body>
 </html>
