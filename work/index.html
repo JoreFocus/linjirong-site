@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>作品 · linjirong</title>
-  <meta name="description" content="林骥蓉(linjirong)的作品集 — 站点、内容、IP、工具。">
+  <meta name="description" content="林骥蓉(linjirong)的作品集 — 凑近点,推开它。">
   <link rel="stylesheet" href="/assets/css/site.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='82' font-size='90' font-family='-apple-system,sans-serif'%3E%E5%93%81%3C/text%3E%3C/svg%3E">
   <script>
@@ -12,6 +12,7 @@
       document.documentElement.classList.add('has-anim');
     }
   </script>
+  <!-- 凑近「品」字左下角那个口。它会自己讲故事。 -->
 </head>
 <body>
   <header class="site-nav">
@@ -23,50 +24,25 @@
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1>作<svg class="pin heavy" viewBox="-4 -4 58 54" aria-label="品" role="img" style="width:0.68em;height:0.68em;vertical-align:0.04em"><title>品</title><rect x="13" y="0" width="24" height="20"/><rect x="26" y="26" width="24" height="20"/><path d="M0,26 L8,26 L8,30 L24,30 L24,46 L0,46 Z"/></svg></h1>
-      <p class="tagline">做过的东西 — 站点、内容、IP、工具。慢慢补。</p>
-    </section>
-
-    <section data-reveal>
-      <h2 class="section-title">项目</h2>
-      <div class="featured-grid">
-        <a href="/work/25ip/" class="feature-card">
-          <div class="feature-preview gradient-1"></div>
-          <div class="feature-body">
-            <h3>光阴里的沉淀</h3>
-            <p>25IP 训练营结营展示页。走马灯隧道、字母墙、山林粒子。</p>
-            <span class="feature-meta">2026 · 单文件 HTML</span>
-          </div>
-        </a>
-        <a href="/pitch/" class="feature-card">
-          <div class="feature-preview gradient-2"></div>
-          <div class="feature-body">
-            <h3>数字遗产 · 路演</h3>
-            <p>课程项目路演主体,投屏用。</p>
-            <span class="feature-meta">2026 · /pitch/</span>
-          </div>
-        </a>
-        <a href="/kit/" class="feature-card">
-          <div class="feature-preview gradient-3"></div>
-          <div class="feature-body">
-            <h3>数字遗产 · 知识包</h3>
-            <p>团队成员的最小必要知识包。</p>
-            <span class="feature-meta">2026 · /kit/</span>
-          </div>
-        </a>
-      </div>
-    </section>
-
-    <section data-reveal>
-      <h2 class="section-title">直达短链</h2>
-      <p style="margin-bottom:1rem">台上记的就这俩,别绕。</p>
-      <div class="quick-links">
-        <a href="/pitch/">/pitch/</a>
-        <a href="/kit/">/kit/</a>
-      </div>
-    </section>
+  <main class="zuopin-stage">
+    <a href="/work/inside/" class="zuopin-link" aria-label="打开作品文件夹">
+      <h1 class="zuopin-text">
+        <span class="char">作</span><span class="pin-3d">
+          <svg class="pin-outline" viewBox="-4 -4 58 54" aria-hidden="true">
+            <rect class="kou kou-top" x="13" y="0" width="24" height="20"/>
+            <rect class="kou kou-br" x="26" y="26" width="24" height="20"/>
+            <path class="kou kou-folder" d="M0,26 L8,26 L8,30 L24,30 L24,46 L0,46 Z"/>
+          </svg>
+          <span class="folder-3d" aria-hidden="true">
+            <span class="folder-paper p1"></span>
+            <span class="folder-paper p2"></span>
+            <span class="folder-paper p3"></span>
+            <span class="folder-flap"></span>
+          </span>
+        </span>
+      </h1>
+      <p class="zuopin-hint">凑近点 ↘</p>
+    </a>
   </main>
 
   <footer class="site-footer">
