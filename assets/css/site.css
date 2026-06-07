@@ -29,64 +29,55 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoratio
 
 /* Nav */
 .site-nav {
-  padding: 2rem 5vw;
+  padding: 1.5rem 5vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: var(--max);
   margin: 0 auto;
-  gap: 2rem;
 }
-.brand { text-decoration: none; display: block; }
-.brand:hover { opacity: 0.7; transition: opacity 0.25s ease; }
-.sig-img { height: 28px; width: auto; display: block; }
+.brand { text-decoration: none; display: flex; align-items: center; }
+.brand:hover { opacity: 0.75; }
+.sig-img { height: 24px; width: auto; display: block; }
 
 .nav-center {
   display: flex;
-  gap: 2.5rem;
+  gap: 2rem;
   align-items: center;
-  margin: 0 auto;
   font-size: 0.9rem;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 .nav-center a {
-  padding: 0.5rem 0;
-  border-bottom: 1px solid transparent;
-  transition: all 0.25s ease;
   color: var(--fg);
   text-decoration: none;
+  transition: opacity 0.2s ease;
+  padding: 0.25rem 0;
 }
 .nav-center a:hover {
-  border-bottom-color: var(--fg);
   opacity: 0.6;
 }
 .nav-center a.nav-icon {
-  font-size: 1.2rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  border: none;
+  font-size: 1rem;
+  font-weight: 600;
 }
-.nav-center a.nav-icon:hover { border: none; opacity: 1; }
+.nav-center a.nav-icon:hover { opacity: 1; }
 
 .nav-social {
   display: flex;
   gap: 1.5rem;
   align-items: center;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
 }
 .social-link {
   color: var(--muted);
   text-decoration: none;
-  padding: 0.5rem 0;
-  border-bottom: 1px solid transparent;
-  transition: all 0.25s ease;
+  transition: color 0.2s ease;
 }
 .social-link:hover {
   color: var(--fg);
-  border-bottom-color: var(--fg);
 }
 
 /* Hero */
