@@ -91,9 +91,10 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoratio
 }
 .hero h1 {
   font-size: clamp(3.5rem, 12vw, 9rem);
-  font-weight: 700;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  font-family: -apple-system, "Noto Sans CJK SC", "Source Han Sans SC", "PingFang SC", sans-serif;
 }
 .tagline {
   margin-top: 2rem;
