@@ -40,7 +40,7 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoratio
 .brand:hover { opacity: 0.75; }
 .sig-img { height: 24px; width: auto; display: block; }
 
-.nav-center {
+.nav-links {
   display: flex;
   gap: 2rem;
   align-items: center;
@@ -48,36 +48,13 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoratio
   font-weight: 400;
   letter-spacing: 0.01em;
 }
-.nav-center a {
+.nav-links a {
   color: var(--fg);
   text-decoration: none;
   transition: opacity 0.2s ease;
-  padding: 0.25rem 0;
 }
-.nav-center a:hover {
+.nav-links a:hover {
   opacity: 0.6;
-}
-.nav-center a.nav-icon {
-  font-size: 1rem;
-  font-weight: 600;
-}
-.nav-center a.nav-icon:hover { opacity: 1; }
-
-.nav-social {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  font-size: 0.8rem;
-  font-weight: 400;
-  letter-spacing: 0.01em;
-}
-.social-link {
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-.social-link:hover {
-  color: var(--fg);
 }
 
 /* Hero */
