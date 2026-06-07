@@ -21,10 +21,6 @@
 </head>
 <body>
   <header class="site-nav">
-    <a href="/" class="brand brand-interactive" id="brandLink">
-      <span class="brand-text" id="brandText">linjirong</span>
-      <object class="brand-sig" id="brandSig" data="/assets/images/signature.svg" type="image/svg+xml" style="display:none;"></object>
-    </a>
     <nav class="nav-links">
       <a href="/about/">About</a>
       <a href="/work/">Works</a>
@@ -40,7 +36,10 @@
         <span class="float f2"></span>
         <span class="float f3"></span>
       </div>
-      <h1 class="hero-name">linjirong</h1>
+      <div class="hero-name-container" id="heroNameContainer">
+        <h1 class="hero-name" id="heroName">linjirong</h1>
+        <object class="hero-sig" id="heroSig" data="/assets/images/signature.svg" type="image/svg+xml" style="display:none;"></object>
+      </div>
       <p class="tagline">独立开发者 · 在做 Puffie、AI 工具、内容副业。把年轻定投在自己身上。</p>
     </section>
 
@@ -114,14 +113,16 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const brandLink = document.getElementById('brandLink');
-      const brandText = document.getElementById('brandText');
-      const brandSig = document.getElementById('brandSig');
+      const heroName = document.getElementById('heroName');
+      const heroSig = document.getElementById('heroSig');
+      const heroContainer = document.getElementById('heroNameContainer');
 
       let sigActive = false;
 
       document.addEventListener('mousemove', function(e) {
-        const rect = brandLink.getBoundingClientRect();
+        if (!heroContainer) return;
+
+        const rect = heroContainer.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         const dist = Math.sqrt(
@@ -129,19 +130,19 @@
           Math.pow(e.clientY - centerY, 2)
         );
 
-        const triggerDist = 150; // 触发距离
+        const triggerDist = 200;
 
         if (dist < triggerDist && !sigActive) {
           sigActive = true;
-          brandText.style.opacity = '0';
-          brandSig.style.display = 'block';
-          brandSig.classList.add('active');
+          heroName.style.opacity = '0';
+          heroSig.style.display = 'block';
+          setTimeout(() => heroSig.classList.add('active'), 10);
         } else if (dist >= triggerDist && sigActive) {
           sigActive = false;
-          brandText.style.opacity = '1';
-          brandSig.classList.remove('active');
+          heroName.style.opacity = '1';
+          heroSig.classList.remove('active');
           setTimeout(() => {
-            brandSig.style.display = 'none';
+            heroSig.style.display = 'none';
           }, 400);
         }
       });

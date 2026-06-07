@@ -36,11 +36,12 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoratio
   max-width: var(--max);
   margin: 0 auto;
 }
-.brand { text-decoration: none; display: block; position: relative; width: 80px; height: 40px; }
-.brand:hover { opacity: 0.75; }
-.brand-text { display: block; font-weight: 400; font-size: 0.9rem; letter-spacing: 0.01em; transition: opacity 0.4s ease; }
-.brand-sig { width: 100%; height: 100%; position: absolute; top: 0; left: 0; transition: opacity 0.4s ease; opacity: 0; }
-.brand-sig.active { opacity: 1; }
+.brand { text-decoration: none; display: none; }
+
+.hero-name-container { position: relative; display: inline-block; }
+.hero-name { transition: opacity 0.4s ease; }
+.hero-sig { width: 100%; height: 100%; position: absolute; top: 0; left: 0; transition: opacity 0.4s ease; opacity: 0; }
+.hero-sig.active { opacity: 1; }
 
 .nav-links {
   display: flex;
