@@ -46,7 +46,7 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoratio
   left: 50%;
   transform: translate(-50%, -50%);
   height: auto;
-  max-width: 300px;
+  max-width: clamp(400px, 20vw, 700px);
   display: none;
   opacity: 0;
   transition: opacity 0.5s ease;
