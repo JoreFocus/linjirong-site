@@ -21,8 +21,9 @@
 </head>
 <body>
   <header class="site-nav">
-    <a href="/" class="brand signature">
-      <img src="/assets/images/signature.png" alt="linjirong" class="sig-img">
+    <a href="/" class="brand brand-interactive" id="brandLink">
+      <span class="brand-text" id="brandText">linjirong</span>
+      <object class="brand-sig" id="brandSig" data="/assets/images/signature.svg" type="image/svg+xml" style="display:none;"></object>
     </a>
     <nav class="nav-links">
       <a href="/about/">About</a>
@@ -110,5 +111,41 @@
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="/assets/js/site.js" defer></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const brandLink = document.getElementById('brandLink');
+      const brandText = document.getElementById('brandText');
+      const brandSig = document.getElementById('brandSig');
+
+      let sigActive = false;
+
+      document.addEventListener('mousemove', function(e) {
+        const rect = brandLink.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        const dist = Math.sqrt(
+          Math.pow(e.clientX - centerX, 2) +
+          Math.pow(e.clientY - centerY, 2)
+        );
+
+        const triggerDist = 150; // 触发距离
+
+        if (dist < triggerDist && !sigActive) {
+          sigActive = true;
+          brandText.style.opacity = '0';
+          brandSig.style.display = 'block';
+          brandSig.classList.add('active');
+        } else if (dist >= triggerDist && sigActive) {
+          sigActive = false;
+          brandText.style.opacity = '1';
+          brandSig.classList.remove('active');
+          setTimeout(() => {
+            brandSig.style.display = 'none';
+          }, 400);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
