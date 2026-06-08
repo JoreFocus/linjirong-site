@@ -53,34 +53,32 @@
       </ul>
     </section>
 
-    <section class="featured" data-reveal>
-      <h2 class="section-title">精选作品</h2>
-      <div class="featured-grid">
-        <a href="/work/25ip/" class="feature-card">
-          <div class="feature-preview gradient-1"></div>
-          <div class="feature-body">
-            <h3>光阴里的沉淀</h3>
-            <p>25IP 训练营结营单文件 HTML — 走马灯隧道、字母墙、山林粒子。</p>
-            <span class="feature-meta">2026 · 单文件 HTML</span>
-          </div>
-        </a>
-        <a href="/pitch/" class="feature-card">
-          <div class="feature-preview gradient-2"></div>
-          <div class="feature-body">
-            <h3>数字遗产</h3>
-            <p>课程项目 — 路演展示 + 团队最小知识包。</p>
-            <span class="feature-meta">2026 · /pitch/ · /kit/</span>
-          </div>
-        </a>
-        <div class="feature-card pending">
-          <div class="feature-preview gradient-3"></div>
-          <div class="feature-body">
-            <h3>Puffie</h3>
-            <p>梦核 IP — 角色 + 故事 + 自动化生成流水线。</p>
-            <span class="feature-meta">进行中</span>
+    <section class="works-entry" data-reveal>
+      <div class="works-wordmark-bg" aria-hidden="true">Work</div>
+      <p class="works-entry-lead">好奇？来看看我的</p>
+      <a href="/work/" class="works-folder-wrap">
+        <div id="wf" style="cursor:pointer;perspective:800px;perspective-origin:50% 32%;-webkit-tap-highlight-color:transparent;">
+          <div class="fw">
+            <div style="position:absolute;top:0;left:0;width:33%;height:8%;background:#002035;border-radius:5px 5px 0 0;z-index:1"></div>
+            <div style="position:absolute;top:7%;left:0;right:0;bottom:0;background:#002035;border-radius:0 11px 11px 11px;z-index:2"></div>
+            <div id="wf-p6" class="wpc" style="top:14%;background:#8fb0ba;z-index:3"></div>
+            <div id="wf-p5" class="wpc" style="top:11%;background:#7fa8b3;z-index:4"></div>
+            <div id="wf-p4" class="wpc" style="top:9%;background:#6f9faa;z-index:5"></div>
+            <div id="wf-p3" class="wpc" style="top:7.5%;background:#5f97a2;z-index:6"></div>
+            <div id="wf-p2" class="wpc" style="top:6%;background:#4f8f9a;z-index:7"></div>
+            <div id="wf-p1" class="wpc" style="top:5%;background:#3f8792;z-index:8"></div>
+            <div id="wf-cv" style="backface-visibility:hidden;-webkit-backface-visibility:hidden;position:absolute;inset:0;z-index:10;">
+              <div style="position:absolute;top:0;left:0;width:33%;height:8%;background:#003249;border-radius:5px 5px 0 0"></div>
+              <div style="position:absolute;top:7%;left:0;right:0;bottom:0;background:#003249;border-radius:0 11px 11px 11px">
+                <div style="position:absolute;inset:0;border:0.5px solid rgba(255,255,255,.1);border-radius:0 11px 11px 11px"></div>
+                <div style="position:absolute;top:0;left:0;right:0;height:1px;background:rgba(255,255,255,.18);border-radius:0 11px 0 0"></div>
+              </div>
+            </div>
+            <div id="wf-sw" style="position:absolute;top:7%;left:0;right:0;bottom:0;z-index:11;pointer-events:none;"></div>
           </div>
         </div>
-      </div>
+      </a>
+      <p class="works-entry-hint">或者继续向下滚动</p>
     </section>
 
     <section class="about-teaser" data-reveal>
@@ -147,6 +145,29 @@
         }
       });
     });
+
+    var wfcv = document.getElementById('wf-cv'), wfsw = document.getElementById('wf-sw'), wffw = document.getElementById('wf');
+    var wfps = ['wf-p1','wf-p2','wf-p3','wf-p4','wf-p5','wf-p6'].map(function(id){return document.getElementById(id);});
+    var wfOpen = false, wfTl = null, TO = 'center bottom', OA = [32,26,20,15,10,6];
+
+    function wfOpenF(){
+      if(wfOpen) return; wfOpen=true; if(wfTl) wfTl.kill();
+      wfTl = gsap.timeline();
+      wfTl.to([wfcv,wfsw],{rotateX:17,duration:.15,ease:'power1.out',transformOrigin:TO})
+          .to([wfcv,wfsw],{rotateX:54,duration:.58,ease:'power2.out',transformOrigin:TO});
+      wfps.forEach(function(p,i){ wfTl.to(p,{rotateX:OA[i],duration:.52,ease:'power2.out',transformOrigin:TO},'.12'); });
+    }
+    function wfCloseF(){
+      if(!wfOpen) return; wfOpen=false; if(wfTl) wfTl.kill();
+      wfTl = gsap.timeline();
+      wfTl.to(wfps.slice().reverse(),{rotateX:0,transformOrigin:TO,duration:.36,ease:'power2.in',stagger:.05});
+      wfTl.to([wfcv,wfsw],{rotateX:12,duration:.44,ease:'power2.out',transformOrigin:TO},'-=.26');
+    }
+
+    wffw.addEventListener('mouseenter', wfOpenF);
+    wffw.addEventListener('mouseleave', wfCloseF);
+    gsap.set([wfcv,wfsw], {rotateX:12, transformOrigin:TO});
+    setTimeout(wfOpenF, 800);
   </script>
 </body>
 </html>

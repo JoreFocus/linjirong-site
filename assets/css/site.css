@@ -533,6 +533,73 @@ section p { color: var(--muted); max-width: 60ch; }
 .breadcrumb a { border-bottom: 1px solid var(--muted); padding-bottom: 1px; }
 .breadcrumb a:hover { text-decoration: none; color: var(--fg); border-color: var(--fg); }
 
+/* Works entry section — Juan Mora style */
+.works-entry {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 7rem 5vw;
+  gap: 2.5rem;
+  background: #FBE6A7;
+}
+.works-wordmark-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: clamp(18rem, 40vw, 52rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: #DE1923;
+  opacity: 0.12;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.works-entry-lead {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: #003249;
+  opacity: 0.6;
+  max-width: none;
+}
+.works-folder-wrap {
+  position: relative;
+  z-index: 1;
+  display: block;
+  text-decoration: none;
+}
+.works-folder-wrap:hover { text-decoration: none; }
+.fw {
+  position: relative;
+  width: clamp(200px, 30vw, 420px);
+  height: clamp(158px, 23.7vw, 332px);
+  filter: drop-shadow(0 24px 48px rgba(0,50,73,0.3)) drop-shadow(0 8px 16px rgba(0,0,0,0.1));
+}
+.wpc {
+  position: absolute;
+  left: 7px;
+  right: 7px;
+  bottom: 9px;
+  border-radius: 9px;
+}
+.works-entry-hint {
+  position: relative;
+  z-index: 1;
+  font-size: 0.82rem;
+  color: #003249;
+  opacity: 0.5;
+  max-width: none;
+  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  letter-spacing: 0.04em;
+}
+
 /* Mobile */
 @media (max-width: 600px) {
   body { font-size: 15px; }
@@ -544,4 +611,7 @@ section p { color: var(--muted); max-width: 60ch; }
   .site-footer.big { margin-top: 3.5rem; padding-top: 3rem; }
   .footer-meta { gap: 1rem; }
   .floats { display: none; } /* keep mobile clean */
+  .featured-works { padding: 4rem 5vw; }
+  .works-title { margin-bottom: 2rem; }
+  .folder-wrapper { width: 240px; height: 180px; }
 }
