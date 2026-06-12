@@ -402,11 +402,18 @@ body.folio {
 }
 
 .folio-hero {
+  --cream: #fbf3e8;
+  --peach-hi: #ffe2c9;
+  --peach-lo: #ffd1a9;
+  --soft: #8f8b85;
+  --blue: #2b3af0;
+  --folio-sans: "Archivo", -apple-system, "Helvetica Neue", Arial, sans-serif;
   position: relative;
   max-width: none;
   padding: 6rem 5vw 4rem;
   min-height: 100vh;
   min-height: 100svh;
+  background: var(--cream);
   display: flex;
   align-items: center;
   justify-content: center;
