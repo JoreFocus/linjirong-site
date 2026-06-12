@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>预览 — Work 页改动</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  --cream: #fbf3e8; --peach-hi: #ffe2c9; --peach-lo: #ffd1a9;
+  --soft: #8f8b85; --blue: #2b3af0;
+  --folio-sans: "Archivo", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  background: var(--cream);
+  font-family: -apple-system, sans-serif;
+  color: #1a1a1a;
+}
+a { color: inherit; text-decoration: none; }
+
+/* nav */
+.site-nav { position: absolute; top: 0; left: 0; right: 0; z-index: 10; padding: 1.5rem 5vw; display: flex; justify-content: flex-end; }
+.nav-links { display: flex; gap: 2rem; font-size: 0.92rem; }
+.nav-links a { color: #555; }
+.nav-links a.current { color: #111; font-weight: 600; }
+
+/* hero stage */
+.folio-hero {
+  position: relative; max-width: none; padding: 6rem 5vw 4rem;
+  min-height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden;
+}
+.giant-word {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -52%);
+  font-family: var(--folio-sans); font-size: 52vw; font-weight: 800;
+  line-height: 1; letter-spacing: -0.03em; white-space: nowrap;
+  background: linear-gradient(180deg, var(--peach-hi) 10%, var(--peach-lo) 90%);
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+  user-select: none; pointer-events: none;
+}
+.giant-word .o-slot { opacity: 0; }
+.folio-center {
+  position: relative; z-index: 1; display: flex; flex-direction: column;
+  align-items: center; gap: clamp(2rem, 6vh, 3.5rem);
+}
+.folio-kicker, .folio-hint {
+  font-family: var(--folio-sans); color: var(--soft);
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem); letter-spacing: 0.01em;
+}
+.folio-kicker { font-weight: 700; }
+.folio-hint { font-weight: 600; }
+
+/* folder */
+.folder {
+  position: relative; display: block;
+  width: clamp(230px, 26vw, 370px); aspect-ratio: 6/5;
+  perspective: 900px; -webkit-tap-highlight-color: transparent;
+  animation: folder-bob 5.5s ease-in-out infinite;
+}
+@keyframes folder-bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+.folder:focus { outline: none; }
+.f-shadow {
+  position: absolute; left: 8%; right: 8%; bottom: -9%; height: 13%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(31,42,212,.28), transparent 68%);
+  filter: blur(6px); z-index: 0;
+}
+.f-back {
+  position: absolute; left: 0; right: 0; top: 10%; bottom: 0;
+  background: var(--blue); border-radius: 12px 14px 18px 18px; z-index: 1;
+}
+.f-back::before {
+  content: ''; position: absolute; left: 0; bottom: 100%;
+  width: 42%; height: 14%; background: var(--blue); border-radius: 10px 18px 0 0;
+}
+.f-paper {
+  position: absolute; left: 9%; width: 82%; height: 74%;
+  background: #fffdf8; border-radius: 8px 8px 0 0;
+  box-shadow: 0 -3px 14px rgba(20,24,80,.14);
+  display: flex; flex-direction: column; overflow: hidden;
+  transform-origin: 50% 100%;
+  transition: transform .6s cubic-bezier(.3,1.25,.45,1), box-shadow .4s ease;
+}
+.f-paper.p3 { top: 4.5%; z-index: 2; }
+.f-paper.p2 { top: 7.5%; z-index: 3; }
+.f-paper.p1 { top: 10.5%; z-index: 4; }
+.f-chrome { height: 9%; min-height: 12px; background: #efece4; display: flex; align-items: center; gap: 4px; padding: 0 8px; flex: none; }
+.f-chrome i { width: 5px; height: 5px; border-radius: 50%; background: #cfccc2; }
+.f-shot { flex: 1; }
+.f-shot.shot-1 { background: linear-gradient(135deg, #2b3a55, #5d7693); }
+.f-shot.shot-2 { background: linear-gradient(135deg, #6f5440, #c0916e); }
+.f-shot.shot-3 { background: linear-gradient(135deg, #d8c8a0, #c89884); }
+.f-front {
+  position: absolute; left: 0; right: 0; top: 16%; bottom: 0; z-index: 5;
+  background: linear-gradient(165deg, #3a4aff 0%, #2737ec 48%, #1f2cd8 100%);
+  border-radius: 12px 12px 18px 18px;
+  box-shadow: 0 22px 44px -18px rgba(31,42,212,.5);
+  display: flex; align-items: center; justify-content: center;
+  transform-origin: 50% 100%;
+  transition: transform .55s cubic-bezier(.4,.08,.26,1);
+}
+.f-front::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit;
+  border: 1px solid rgba(255,255,255,.14); pointer-events: none;
+}
+.f-chip {
+  position: absolute; top: 9%; left: 6.5%;
+  font-family: var(--folio-sans); font-size: clamp(.62rem,.9vw,.78rem);
+  font-weight: 600; letter-spacing: .03em; color: #dde2ff;
+  border: 1px solid rgba(221,226,255,.55); border-radius: 8px; padding: .3em .9em;
+}
+.f-mark {
+  font-size: clamp(3.4rem, 7vw, 5.6rem); font-weight: 800; line-height: 1;
+  color: #2533e2;
+  text-shadow: 0 -1px 1px rgba(10,16,120,.5), 0 1px 1px rgba(150,168,255,.35);
+  user-select: none;
+}
+.folder:hover .f-front { transform: rotateX(32deg); }
+.folder:hover .f-paper { box-shadow: 0 -10px 30px rgba(20,24,80,.2); }
+.folder:hover .p1 { transform: translateY(-56%); transition-delay: .05s; }
+.folder:hover .p2 { transform: translateY(-40%) translateX(-13%) rotate(-8deg); transition-delay: .12s; }
+.folder:hover .p3 { transform: translateY(-40%) translateX(13%) rotate(8deg); transition-delay: .18s; }
+
+/* projects */
+.folio-projects { padding: 5rem 5vw 2rem; max-width: 900px; margin: 0 auto; }
+.section-title { font-size: 0.78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #888; margin-bottom: 2rem; }
+.featured-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.25rem; }
+.feature-card {
+  display: block; border-radius: 14px; overflow: hidden;
+  background: #fffdf9; box-shadow: 0 2px 12px rgba(0,0,0,.06);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+.feature-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(0,0,0,.1); }
+.feature-preview { height: 140px; }
+.gradient-1 { background: linear-gradient(135deg, #2b3a55, #5d7693); }
+.gradient-2 { background: linear-gradient(135deg, #6f5440, #c0916e); }
+.gradient-3 { background: linear-gradient(135deg, #d8c8a0, #c89884); }
+.feature-body { padding: 1.1rem 1.25rem 1.3rem; }
+.feature-body h3 { font-size: 1rem; font-weight: 700; margin-bottom: .4rem; }
+.feature-body p { font-size: .88rem; color: #666; line-height: 1.5; margin-bottom: .6rem; }
+.feature-meta { font-size: .78rem; color: #999; }
+
+/* quick links */
+.quick-section { padding: 2rem 5vw 4rem; max-width: 900px; margin: 0 auto; }
+.quick-links { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: .75rem; }
+.quick-links a {
+  font-family: ui-monospace, monospace; font-size: .95rem; font-weight: 600;
+  color: var(--blue); border: 1.5px solid var(--blue); border-radius: 8px;
+  padding: .5em 1.2em; transition: background .2s, color .2s;
+}
+.quick-links a:hover { background: var(--blue); color: #fff; }
+
+/* footer */
+.site-footer { padding: 2rem 5vw; border-top: 1px solid #e8e0d0; text-align: center; color: #aaa; font-size: .85rem; }
+</style>
+</head>
+<body>
+<header class="site-nav">
+  <nav class="nav-links">
+    <a href="#">Home</a><a href="#">About</a><a href="#" class="current">Works</a>
+  </nav>
+</header>
+
+<section class="folio-hero">
+  <div class="giant-word" aria-hidden="true">W<span class="o-slot">o</span>rk</div>
+  <div class="folio-center">
+    <p class="folio-kicker">Curious?... Check out my</p>
+    <a class="folder" href="#projects" aria-label="打开作品文件夹">
+      <span class="f-shadow"></span>
+      <span class="f-back"></span>
+      <span class="f-paper p3"><span class="f-chrome"><i></i><i></i><i></i></span><span class="f-shot shot-3"></span></span>
+      <span class="f-paper p2"><span class="f-chrome"><i></i><i></i><i></i></span><span class="f-shot shot-2"></span></span>
+      <span class="f-paper p1"><span class="f-chrome"><i></i><i></i><i></i></span><span class="f-shot shot-1"></span></span>
+      <span class="f-front">
+        <span class="f-chip">Portfolio</span>
+        <span class="f-mark">品</span>
+      </span>
+    </a>
+    <p class="folio-hint">Or keep scrolling</p>
+  </div>
+</section>
+
+<section class="folio-projects" id="projects">
+  <h2 class="section-title">项目</h2>
+  <div class="featured-grid">
+    <a href="#" class="feature-card">
+      <div class="feature-preview gradient-1"></div>
+      <div class="feature-body">
+        <h3>光阴里的沉淀</h3>
+        <p>25IP 训练营结营展示页。走马灯隧道、字母墙、山林粒子。</p>
+        <span class="feature-meta">2026 · 单文件 HTML</span>
+      </div>
+    </a>
+    <a href="#" class="feature-card">
+      <div class="feature-preview gradient-2"></div>
+      <div class="feature-body">
+        <h3>数字遗产 · 路演</h3>
+        <p>课程项目路演主体，投屏用。</p>
+        <span class="feature-meta">2026 · /pitch/</span>
+      </div>
+    </a>
+    <a href="#" class="feature-card">
+      <div class="feature-preview gradient-3"></div>
+      <div class="feature-body">
+        <h3>数字遗产 · 知识包</h3>
+        <p>团队成员的最小必要知识包。</p>
+        <span class="feature-meta">2026 · /kit/</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<section class="quick-section">
+  <h2 class="section-title">直达短链</h2>
+  <p style="color:#666;font-size:.9rem;margin-bottom:.75rem">台上记的就这俩，别绕。</p>
+  <div class="quick-links">
+    <a href="#">/pitch/</a>
+    <a href="#">/kit/</a>
+  </div>
+</section>
+
+<footer class="site-footer">linjirong.com</footer>
+</body>
+</html>
