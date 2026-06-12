@@ -2,7 +2,7 @@
    minimal, clean, no JS, no animations yet. Phase 2 brings GSAP + Lenis. */
 
 :root {
-  --bg: #fafaf7;
+  --bg: #faf6f0;
   --fg: #1a1a1a;
   --muted: #6b6b6b;
   --line: #e5e5e0;
@@ -82,6 +82,7 @@ a:hover { text-decoration: underline; text-underline-offset: 4px; text-decoratio
 .nav-links a:hover {
   opacity: 0.6;
 }
+.nav-links a.current { opacity: 0.45; }
 
 /* Hero */
 .hero {
@@ -379,148 +380,244 @@ section p { color: var(--muted); max-width: 60ch; }
   line-height: 0.85;
 }
 
-/* ---- Phase 2.5b: /work/ ceremony entrance — real text 品 + folder overlay on hover ---- */
+/* ---- Phase 3: /work/ — folio stage (cream backdrop, giant peach word, blue folder) ---- */
 
-.zuopin-stage {
-  min-height: calc(100vh - 12rem);
+body.folio {
+  --cream: #fbf3e8;
+  --peach-hi: #ffe2c9;
+  --peach-lo: #ffd1a9;
+  --soft: #8f8b85;
+  --blue: #2b3af0;
+  --folio-sans: "Archivo", -apple-system, "Helvetica Neue", Arial, sans-serif;
+  background: var(--cream);
+}
+
+/* Nav floats over the full-screen stage on this page */
+.folio { position: relative; }
+.folio .site-nav {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  max-width: none;
+}
+
+.folio-hero {
+  position: relative;
+  max-width: none;
+  padding: 6rem 5vw 4rem;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* The giant word — wider than the viewport on purpose, clipped at both ends */
+.giant-word {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -52%);
+  font-family: var(--folio-sans);
+  font-size: 52vw;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: var(--peach-lo);
+  background: linear-gradient(180deg, var(--peach-hi) 10%, var(--peach-lo) 90%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  user-select: none;
+  pointer-events: none;
+}
+/* the folder IS the o — the letter itself stays invisible, only its width remains */
+.giant-word .o-slot { opacity: 0; }
+
+.folio-center {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 4rem 5vw 6rem;
-  max-width: var(--max);
-  margin: 0 auto;
-}
-.zuopin-link {
-  display: block;
-  text-align: center;
-  color: inherit;
-}
-.zuopin-link:hover { text-decoration: none; }
-.zuopin-link:focus { outline: none; }
-.zuopin-link:focus-visible { outline: 2px dashed var(--fg); outline-offset: 8px; border-radius: 4px; }
-
-.zuopin-text {
-  font-size: clamp(7rem, 24vw, 18rem);
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  display: inline-block;
+  gap: clamp(2rem, 6vh, 3.5rem);
 }
 
-/* The 「品」 character renders as plain text — looks completely normal at rest.
-   On hover near it, an overlay folder appears at its bottom-left 口 position. */
-.pin-anchor {
+.folio-kicker,
+.folio-hint {
+  font-family: var(--folio-sans);
+  color: var(--soft);
+  font-size: clamp(0.9rem, 1.3vw, 1.1rem);
+  letter-spacing: 0.01em;
+}
+.folio-kicker { font-weight: 700; }
+.folio-hint { font-weight: 600; }
+
+/* The folder. Plain <a>: hover (or tap) opens it, click goes to the projects. */
+.folder {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: clamp(230px, 26vw, 370px);
+  aspect-ratio: 6 / 5;
+  perspective: 900px;
+  -webkit-tap-highlight-color: transparent;
+}
+.folder:hover { text-decoration: none; }
+.folder:focus { outline: none; }
+.folder:focus-visible {
+  outline: 2px dashed var(--blue);
+  outline-offset: 16px;
+  border-radius: 10px;
+}
+.has-anim .folder { animation: folder-bob 5.5s ease-in-out infinite; }
+@keyframes folder-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
-/* Folder sits over the bottom-left 口 of the rendered 品 character.
-   Coordinates measured against the .pin-anchor box (which equals the 品 glyph box).
-   For PingFang/Source Han at weight 700, bottom-left 口 is roughly:
-   left 6% — width 38%, bottom 8% — height 36%. */
-.folder-3d {
+.f-shadow {
   position: absolute;
-  left: 6%;
-  width: 38%;
-  bottom: 8%;
-  height: 36%;
-  perspective: 1200px;
-  perspective-origin: 50% 30%;
-  transform-style: preserve-3d;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.18s ease;
-}
-.has-anim .pin-anchor:hover .folder-3d,
-.has-anim .zuopin-link:focus-visible .folder-3d {
-  opacity: 1;
+  left: 8%; right: 8%; bottom: -9%;
+  height: 13%;
+  background: radial-gradient(ellipse at 50% 50%, rgba(31, 42, 212, 0.28), transparent 68%);
+  filter: blur(6px);
+  z-index: 0;
 }
 
-/* Back panel — sits in place, includes a small tab notch at top-left to read as a manila folder */
-.folder-back {
+/* Back panel + tab */
+.f-back {
   position: absolute;
-  inset: 0;
-  background: var(--fg);
-  border-radius: 3% 3% 4% 4%;
+  left: 0; right: 0; top: 10%; bottom: 0;
+  background: var(--blue);
+  border-radius: 12px 14px 18px 18px;
   z-index: 1;
 }
-.folder-back::before {
+.f-back::before {
   content: '';
   position: absolute;
-  left: 6%;
-  top: -14%;
-  width: 36%;
-  height: 18%;
-  background: var(--fg);
-  border-radius: 3px 3px 0 0;
+  left: 0; bottom: 100%;
+  width: 42%; height: 14%;
+  background: var(--blue);
+  border-radius: 10px 18px 0 0;
 }
 
-/* Papers — visible behind front face once front opens. They droop downward out of the folder. */
-.folder-paper {
+/* Papers — tiny browser shots peeking out of the top, popping out on open */
+.f-paper {
   position: absolute;
-  width: 84%;
-  height: 92%;
-  left: 8%;
-  top: 4%;
-  border-radius: 3px;
-  opacity: 0;
-  transform: translateY(0) rotate(0deg);
-  transform-origin: top center;
-  transition:
-    transform 0.7s cubic-bezier(0.32, 0.72, 0.4, 1),
-    opacity 0.4s ease;
+  left: 9%; width: 82%; height: 74%;
+  background: #fffdf8;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 -3px 14px rgba(20, 24, 80, 0.14);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform-origin: 50% 100%;
+  transition: transform 0.6s cubic-bezier(0.3, 1.25, 0.45, 1), box-shadow 0.4s ease;
 }
-.folder-paper.p1 { background: linear-gradient(135deg, #2b3a55, #5d7693); z-index: 2; }
-.folder-paper.p2 { background: linear-gradient(135deg, #6f5440, #c0916e); z-index: 3; }
-.folder-paper.p3 { background: linear-gradient(135deg, #d8c8a0, #c89884); z-index: 4; }
+.f-paper.p3 { top: 4.5%; z-index: 2; }
+.f-paper.p2 { top: 7.5%; z-index: 3; }
+.f-paper.p1 { top: 10.5%; z-index: 4; }
 
-/* Front face — covers everything at rest. Hinges at TOP edge, swings backward+up on hover,
-   exposing the interior so the papers can droop out the bottom. */
-.folder-front {
+.f-chrome {
+  height: 9%;
+  min-height: 12px;
+  background: #efece4;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 8px;
+  flex: none;
+}
+.f-chrome i { width: 5px; height: 5px; border-radius: 50%; background: #cfccc2; }
+.f-shot { flex: 1; }
+.f-shot.shot-1 { background: linear-gradient(135deg, #2b3a55, #5d7693); }
+.f-shot.shot-2 { background: linear-gradient(135deg, #6f5440, #c0916e); }
+.f-shot.shot-3 { background: linear-gradient(135deg, #d8c8a0, #c89884); }
+
+/* Front cover — hinges at its bottom edge and folds back to open */
+.f-front {
+  position: absolute;
+  left: 0; right: 0; top: 16%; bottom: 0;
+  z-index: 5;
+  background: linear-gradient(165deg, #3a4aff 0%, #2737ec 48%, #1f2cd8 100%);
+  border-radius: 12px 12px 18px 18px;
+  box-shadow: 0 22px 44px -18px rgba(31, 42, 212, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: 50% 100%;
+  transition: transform 0.55s cubic-bezier(0.4, 0.08, 0.26, 1);
+}
+.f-front::after {
+  content: '';
   position: absolute;
   inset: 0;
-  background: var(--fg);
-  border-radius: 3% 3% 5% 5%;
-  z-index: 5;
-  transform-origin: top center;
-  transform: rotateX(0deg);
-  transition: transform 0.55s cubic-bezier(0.45, 0.1, 0.3, 1);
-  backface-visibility: hidden;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  pointer-events: none;
 }
 
-/* Hover: front folds backward (out of viewer's path), papers slide down + tilt slightly (耷拉) */
-.has-anim .pin-anchor:hover .folder-front,
-.has-anim .zuopin-link:focus-visible .folder-front {
-  transform: rotateX(-128deg);
+.f-chip {
+  position: absolute;
+  top: 9%; left: 6.5%;
+  font-family: var(--folio-sans);
+  font-size: clamp(0.62rem, 0.9vw, 0.78rem);
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: #dde2ff;
+  border: 1px solid rgba(221, 226, 255, 0.55);
+  border-radius: 8px;
+  padding: 0.3em 0.9em;
 }
-.has-anim .pin-anchor:hover .folder-paper,
-.has-anim .zuopin-link:focus-visible .folder-paper {
-  opacity: 1;
+
+/* Debossed 品 — the site's folder-glyph motif, stamped into the cover */
+.f-mark {
+  font-size: clamp(3.4rem, 7vw, 5.6rem);
+  font-weight: 800;
+  line-height: 1;
+  color: #2533e2;
+  text-shadow:
+    0 -1px 1px rgba(10, 16, 120, 0.5),
+    0 1px 1px rgba(150, 168, 255, 0.35);
+  user-select: none;
 }
-.has-anim .pin-anchor:hover .folder-paper.p1,
-.has-anim .zuopin-link:focus-visible .folder-paper.p1 {
-  transform: translateY(45%) rotate(-2.5deg);
+
+/* Open state — hover (anim-capable), keyboard focus, or .open (touch) */
+.has-anim .folder:hover .f-front,
+.folder:focus-visible .f-front,
+.folder.open .f-front {
+  transform: rotateX(32deg);
+}
+.has-anim .folder:hover .f-paper,
+.folder:focus-visible .f-paper,
+.folder.open .f-paper {
+  box-shadow: 0 -10px 30px rgba(20, 24, 80, 0.2);
+}
+.has-anim .folder:hover .p1,
+.folder:focus-visible .p1,
+.folder.open .p1 {
+  transform: translateY(-56%);
+  transition-delay: 0.05s;
+}
+.has-anim .folder:hover .p2,
+.folder:focus-visible .p2,
+.folder.open .p2 {
+  transform: translateY(-40%) translateX(-13%) rotate(-8deg);
+  transition-delay: 0.12s;
+}
+.has-anim .folder:hover .p3,
+.folder:focus-visible .p3,
+.folder.open .p3 {
+  transform: translateY(-40%) translateX(13%) rotate(8deg);
   transition-delay: 0.18s;
 }
-.has-anim .pin-anchor:hover .folder-paper.p2,
-.has-anim .zuopin-link:focus-visible .folder-paper.p2 {
-  transform: translateY(78%) rotate(2deg);
-  transition-delay: 0.28s;
-}
-.has-anim .pin-anchor:hover .folder-paper.p3,
-.has-anim .zuopin-link:focus-visible .folder-paper.p3 {
-  transform: translateY(110%) rotate(-1deg);
-  transition-delay: 0.38s;
-}
 
-.zuopin-hint {
-  margin-top: 2.5rem;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.95rem;
-  color: var(--muted);
-  letter-spacing: 0.04em;
-}
+/* Projects below the fold */
+.folio-projects { padding-top: 5rem; }
+.folio-projects .feature-card,
+.folio .direction-list li,
+.folio .card { background: #fffdf9; }
 
 /* Breadcrumb (used on /work/inside/) */
 .breadcrumb {
@@ -533,73 +630,6 @@ section p { color: var(--muted); max-width: 60ch; }
 .breadcrumb a { border-bottom: 1px solid var(--muted); padding-bottom: 1px; }
 .breadcrumb a:hover { text-decoration: none; color: var(--fg); border-color: var(--fg); }
 
-/* Works entry section — Juan Mora style */
-.works-entry {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 7rem 5vw;
-  gap: 2.5rem;
-  background: #FBE6A7;
-}
-.works-wordmark-bg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: clamp(18rem, 40vw, 52rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: #DE1923;
-  opacity: 0.12;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-  z-index: 0;
-}
-.works-entry-lead {
-  position: relative;
-  z-index: 1;
-  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-  color: #003249;
-  opacity: 0.6;
-  max-width: none;
-}
-.works-folder-wrap {
-  position: relative;
-  z-index: 1;
-  display: block;
-  text-decoration: none;
-}
-.works-folder-wrap:hover { text-decoration: none; }
-.fw {
-  position: relative;
-  width: clamp(200px, 30vw, 420px);
-  height: clamp(158px, 23.7vw, 332px);
-  filter: drop-shadow(0 24px 48px rgba(0,50,73,0.3)) drop-shadow(0 8px 16px rgba(0,0,0,0.1));
-}
-.wpc {
-  position: absolute;
-  left: 7px;
-  right: 7px;
-  bottom: 9px;
-  border-radius: 9px;
-}
-.works-entry-hint {
-  position: relative;
-  z-index: 1;
-  font-size: 0.82rem;
-  color: #003249;
-  opacity: 0.5;
-  max-width: none;
-  font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  letter-spacing: 0.04em;
-}
-
 /* Mobile */
 @media (max-width: 600px) {
   body { font-size: 15px; }
@@ -611,7 +641,10 @@ section p { color: var(--muted); max-width: 60ch; }
   .site-footer.big { margin-top: 3.5rem; padding-top: 3rem; }
   .footer-meta { gap: 1rem; }
   .floats { display: none; } /* keep mobile clean */
-  .featured-works { padding: 4rem 5vw; }
-  .works-title { margin-bottom: 2rem; }
-  .folder-wrapper { width: 240px; height: 180px; }
+
+  /* folio stage on small screens: bigger word, folder scaled to thumb size */
+  .folio-hero { padding: 5rem 5vw 3rem; }
+  .giant-word { font-size: 56vw; }
+  .folder { width: clamp(200px, 58vw, 300px); }
+  .folio-projects { padding-top: 3rem; }
 }

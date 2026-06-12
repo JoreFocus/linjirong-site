@@ -4,29 +4,22 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>作品 · linjirong</title>
-  <meta name="description" content="林骥蓉(linjirong)的作品集 — 凑近点,推开它。">
+  <meta name="description" content="林骥蓉(linjirong)的作品集 — 好奇的话,打开这个文件夹。">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/css/site.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='82' font-size='90' font-family='-apple-system,sans-serif'%3E%E5%93%81%3C/text%3E%3C/svg%3E">
-  <style>
-    #fw { display: inline-block; cursor: pointer; perspective: 1200px; perspective-origin: 50% 32%; -webkit-tap-highlight-color: transparent; }
-    .fw { position: relative; width: 280px; height: 220px; }
-    .fw .pc { position: absolute; left: 8px; right: 8px; bottom: 10px; border-radius: 10px; }
-    #cv { backface-visibility: hidden; -webkit-backface-visibility: hidden; position: absolute; inset: 0; z-index: 10; }
-    #sw { position: absolute; top: 15px; left: 0; right: 0; bottom: 0; z-index: 11; pointer-events: none; }
-    #cp { position: absolute; bottom: 12px; right: 8px; width: 45%; opacity: .25; mix-blend-mode: screen; pointer-events: none; }
-  </style>
   <script>
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
       document.documentElement.classList.add('has-anim');
     }
   </script>
 </head>
-<body>
+<body class="folio">
   <header class="site-nav">
-    <a href="/" class="brand signature">
-      <img src="/assets/images/signature.png" alt="linjirong" class="sig-img">
-    </a>
     <nav class="nav-links">
+      <a href="/">Home</a>
       <a href="/about/">About</a>
       <a href="/work/" class="current">Works</a>
       <a href="mailto:Gilbert_Castillolpv@planetmail.com">Email</a>
@@ -34,30 +27,73 @@
     </nav>
   </header>
 
-  <main class="zuopin-stage">
-    <div id="fw">
-      <div class="fw">
-        <div style="position:absolute;top:0;left:0;width:90px;height:18px;background:#e5e5e0;border-radius:6px 6px 0 0;z-index:1"></div>
-        <div style="position:absolute;top:15px;left:0;right:0;bottom:0;background:#f5f5f2;border-radius:0 12px 12px 12px;z-index:2"></div>
-        <div id="p6" class="pc" style="top:32px;background:#f0f0ed;z-index:3"></div>
-        <div id="p5" class="pc" style="top:28px;background:#e8e8e5;z-index:4"></div>
-        <div id="p4" class="pc" style="top:24px;background:#e0e0dd;z-index:5"></div>
-        <div id="p3" class="pc" style="top:20px;background:#d8d8d4;z-index:6"></div>
-        <div id="p2" class="pc" style="top:17px;background:#d0d0cc;z-index:7"></div>
-        <div id="p1" class="pc" style="top:14px;background:#c8c8c3;z-index:8"></div>
-        <div id="cv">
-          <div style="position:absolute;top:0;left:0;width:90px;height:18px;background:#c0c0bb;border-radius:6px 6px 0 0"></div>
-          <div style="position:absolute;top:15px;left:0;right:0;bottom:0;background:#d8d8d4;border-radius:0 12px 12px 12px">
-            <div style="position:absolute;inset:0;border:0.5px solid rgba(0,0,0,.06);border-radius:0 12px 12px 12px"></div>
-            <div style="position:absolute;top:0;left:0;right:0;height:1px;background:rgba(255,255,255,.15);border-radius:0 12px 0 0"></div>
-          </div>
-        </div>
-        <div id="sw">
-          <img id="cp" src="data:image/jpeg;base64,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" alt="">
-        </div>
+  <main>
+    <section class="folio-hero">
+      <div class="giant-word" aria-hidden="true">W<span class="o-slot">o</span>rk</div>
+      <div class="folio-center">
+        <p class="folio-kicker">Curious?... Check out my</p>
+        <a class="folder" id="folder" href="#projects" aria-label="Work — 打开作品文件夹">
+          <span class="f-shadow" aria-hidden="true"></span>
+          <span class="f-back" aria-hidden="true"></span>
+          <span class="f-paper p3" aria-hidden="true">
+            <span class="f-chrome"><i></i><i></i><i></i></span>
+            <span class="f-shot shot-3"></span>
+          </span>
+          <span class="f-paper p2" aria-hidden="true">
+            <span class="f-chrome"><i></i><i></i><i></i></span>
+            <span class="f-shot shot-2"></span>
+          </span>
+          <span class="f-paper p1" aria-hidden="true">
+            <span class="f-chrome"><i></i><i></i><i></i></span>
+            <span class="f-shot shot-1"></span>
+          </span>
+          <span class="f-front" aria-hidden="true">
+            <span class="f-chip">Portfolio</span>
+            <span class="f-mark">品</span>
+          </span>
+        </a>
+        <p class="folio-hint">Or keep scrolling</p>
       </div>
-    </div>
-    <p class="zuopin-hint">悬停或点击打开 ↻</p>
+    </section>
+
+    <section class="folio-projects" id="projects" data-reveal>
+      <h2 class="section-title">项目</h2>
+      <div class="featured-grid">
+        <a href="/work/25ip/" class="feature-card">
+          <div class="feature-preview gradient-1"></div>
+          <div class="feature-body">
+            <h3>光阴里的沉淀</h3>
+            <p>25IP 训练营结营展示页。走马灯隧道、字母墙、山林粒子。</p>
+            <span class="feature-meta">2026 · 单文件 HTML</span>
+          </div>
+        </a>
+        <a href="/pitch/" class="feature-card">
+          <div class="feature-preview gradient-2"></div>
+          <div class="feature-body">
+            <h3>数字遗产 · 路演</h3>
+            <p>课程项目路演主体,投屏用。</p>
+            <span class="feature-meta">2026 · /pitch/</span>
+          </div>
+        </a>
+        <a href="/kit/" class="feature-card">
+          <div class="feature-preview gradient-3"></div>
+          <div class="feature-body">
+            <h3>数字遗产 · 知识包</h3>
+            <p>团队成员的最小必要知识包。</p>
+            <span class="feature-meta">2026 · /kit/</span>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <section data-reveal>
+      <h2 class="section-title">直达短链</h2>
+      <p style="margin-bottom:1rem">台上记的就这俩,别绕。</p>
+      <div class="quick-links">
+        <a href="/pitch/">/pitch/</a>
+        <a href="/kit/">/kit/</a>
+      </div>
+    </section>
   </main>
 
   <footer class="site-footer">
@@ -68,38 +104,29 @@
   </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="/assets/js/site.js" defer></script>
   <script>
-    var cv = document.getElementById('cv'), sw = document.getElementById('sw'), fw = document.getElementById('fw');
-    var ps = ['p1','p2','p3','p4','p5','p6'].map(function(id){return document.getElementById(id);});
-    var isOpen = false, tl = null, TO = 'center bottom', OA = [32, 26, 20, 15, 10, 6];
+    (function () {
+      var folder = document.getElementById('folder');
+      var target = document.getElementById('projects');
+      if (!folder || !target) return;
+      var coarse = matchMedia('(hover: none)').matches;
 
-    function openF(){
-      if(isOpen) return;
-      isOpen = true;
-      if(tl) tl.kill();
-      tl = gsap.timeline();
-      tl.to([cv,sw], {rotateX: 18, duration: .15, ease: 'power1.out', transformOrigin: TO})
-        .to([cv,sw], {rotateX: 58, duration: .58, ease: 'power2.out', transformOrigin: TO});
-      ps.forEach(function(p, i){
-        tl.to(p, {rotateX: OA[i], duration: .52, ease: 'power2.out', transformOrigin: TO}, '.12');
+      folder.addEventListener('click', function (e) {
+        e.preventDefault();
+        // 触屏:第一下打开文件夹,第二下才进去
+        if (coarse && !folder.classList.contains('open')) {
+          folder.classList.add('open');
+          return;
+        }
+        if (window.__lenis) { window.__lenis.scrollTo(target); }
+        else { target.scrollIntoView({ behavior: 'smooth' }); }
       });
-    }
 
-    function closeF(){
-      if(!isOpen) return;
-      isOpen = false;
-      if(tl) tl.kill();
-      tl = gsap.timeline();
-      tl.to(ps.slice().reverse(), {rotateX: 0, transformOrigin: TO, duration: .36, ease: 'power2.in', stagger: .05});
-      tl.to([cv,sw], {rotateX: 12, duration: .44, ease: 'power2.out', transformOrigin: TO}, '-=.26');
-    }
-
-    fw.addEventListener('mouseenter', openF);
-    fw.addEventListener('mouseleave', closeF);
-    fw.addEventListener('click', function(){isOpen ? closeF() : openF();});
-    gsap.set([cv, sw], {rotateX: 12, transformOrigin: TO});
-    setTimeout(openF, 800);
+      document.addEventListener('click', function (e) {
+        if (!folder.contains(e.target)) folder.classList.remove('open');
+      });
+    })();
   </script>
 </body>
 </html>
