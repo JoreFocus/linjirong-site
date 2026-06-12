@@ -4,10 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>作品 · linjirong</title>
-  <meta name="description" content="林骥蓉(linjirong)的作品集 — 好奇的话,打开这个文件夹。">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="林骥蓉(linjirong)的作品集。">
   <link rel="stylesheet" href="/assets/css/site.css">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='82' font-size='90' font-family='-apple-system,sans-serif'%3E%E5%93%81%3C/text%3E%3C/svg%3E">
   <script>
@@ -16,7 +13,7 @@
     }
   </script>
 </head>
-<body class="folio">
+<body>
   <header class="site-nav">
     <nav class="nav-links">
       <a href="/">Home</a>
@@ -28,36 +25,11 @@
   </header>
 
   <main>
-    <section class="folio-hero">
-      <div class="giant-word" aria-hidden="true">W<span class="o-slot">o</span>rk</div>
-      <div class="folio-center">
-        <p class="folio-kicker">Curious?... Check out my</p>
-        <a class="folder" id="folder" href="#projects" aria-label="Work — 打开作品文件夹">
-          <span class="f-shadow" aria-hidden="true"></span>
-          <span class="f-back" aria-hidden="true"></span>
-          <span class="f-paper p3" aria-hidden="true">
-            <span class="f-chrome"><i></i><i></i><i></i></span>
-            <span class="f-shot shot-3"></span>
-          </span>
-          <span class="f-paper p2" aria-hidden="true">
-            <span class="f-chrome"><i></i><i></i><i></i></span>
-            <span class="f-shot shot-2"></span>
-          </span>
-          <span class="f-paper p1" aria-hidden="true">
-            <span class="f-chrome"><i></i><i></i><i></i></span>
-            <span class="f-shot shot-1"></span>
-          </span>
-          <span class="f-front" aria-hidden="true">
-            <span class="f-chip">Portfolio</span>
-            <span class="f-mark">品</span>
-          </span>
-        </a>
-        <p class="folio-hint">Or keep scrolling</p>
-      </div>
+    <section class="hero" style="padding-bottom:1rem">
+      <h1 class="hero-name" style="font-size:clamp(2.5rem,8vw,5rem)">Works</h1>
     </section>
 
-    <section class="folio-projects" id="projects" data-reveal>
-      <h2 class="section-title">项目</h2>
+    <section data-reveal>
       <div class="featured-grid">
         <a href="/work/25ip/" class="feature-card">
           <div class="feature-preview gradient-1"></div>
@@ -71,7 +43,7 @@
           <div class="feature-preview gradient-2"></div>
           <div class="feature-body">
             <h3>数字遗产 · 路演</h3>
-            <p>课程项目路演主体,投屏用。</p>
+            <p>课程项目路演主体，投屏用。</p>
             <span class="feature-meta">2026 · /pitch/</span>
           </div>
         </a>
@@ -85,15 +57,6 @@
         </a>
       </div>
     </section>
-
-    <section data-reveal>
-      <h2 class="section-title">直达短链</h2>
-      <p style="margin-bottom:1rem">台上记的就这俩,别绕。</p>
-      <div class="quick-links">
-        <a href="/pitch/">/pitch/</a>
-        <a href="/kit/">/kit/</a>
-      </div>
-    </section>
   </main>
 
   <footer class="site-footer">
@@ -105,28 +68,5 @@
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script src="/assets/js/site.js" defer></script>
-  <script>
-    (function () {
-      var folder = document.getElementById('folder');
-      var target = document.getElementById('projects');
-      if (!folder || !target) return;
-      var coarse = matchMedia('(hover: none)').matches;
-
-      folder.addEventListener('click', function (e) {
-        e.preventDefault();
-        // 触屏:第一下打开文件夹,第二下才进去
-        if (coarse && !folder.classList.contains('open')) {
-          folder.classList.add('open');
-          return;
-        }
-        if (window.__lenis) { window.__lenis.scrollTo(target); }
-        else { target.scrollIntoView({ behavior: 'smooth' }); }
-      });
-
-      document.addEventListener('click', function (e) {
-        if (!folder.contains(e.target)) folder.classList.remove('open');
-      });
-    })();
-  </script>
 </body>
 </html>
