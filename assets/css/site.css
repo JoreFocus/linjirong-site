@@ -7,6 +7,13 @@
   --muted: #6b6b6b;
   --line: #e5e5e0;
   --max: 1200px;
+  /* folio / work palette — available globally */
+  --cream: #fbf3e8;
+  --peach-hi: #ffe2c9;
+  --peach-lo: #ffd1a9;
+  --soft: #8f8b85;
+  --blue: #2b3af0;
+  --folio-sans: "Archivo", -apple-system, "Helvetica Neue", Arial, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -402,12 +409,6 @@ body.folio {
 }
 
 .folio-hero {
-  --cream: #fbf3e8;
-  --peach-hi: #ffe2c9;
-  --peach-lo: #ffd1a9;
-  --soft: #8f8b85;
-  --blue: #2b3af0;
-  --folio-sans: "Archivo", -apple-system, "Helvetica Neue", Arial, sans-serif;
   position: relative;
   max-width: none;
   padding: 6rem 5vw 4rem;
