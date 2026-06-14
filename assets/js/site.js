@@ -43,48 +43,38 @@
     }
   }
 
-  // ---- Hero floats (GSAP gentle drift) ----
-  if (window.gsap && !reduceMotion && document.querySelector('.float')) {
-    gsap.to('.float.f1', { y: 30, duration: 6, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.float.f2', { y: -20, x: 10, duration: 5, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    gsap.to('.float.f3', { rotation: 90, duration: 14, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-  }
-
   // ---- Mouse-driven effects (skip on touch / reduced motion) ----
   if (reduceMotion || coarse) return;
 
-  // 1) Hero parallax — float shapes follow mouse subtly
+  // 1) Hero parallax — float shapes follow mouse via gsap.quickTo (smooth, single owner of transform)
   var hero = document.querySelector('.hero');
   var floats = hero ? hero.querySelectorAll('.float') : [];
-  if (hero && floats.length) {
-    var heroRect = null;
-    var ticking = false;
-    var mx = 0, my = 0;
-
+  if (hero && floats.length && window.gsap) {
+    var heroRect = hero.getBoundingClientRect();
     function updateHeroRect() { heroRect = hero.getBoundingClientRect(); }
-    updateHeroRect();
     window.addEventListener('resize', updateHeroRect);
     window.addEventListener('scroll', updateHeroRect, { passive: true });
 
+    var setters = [];
+    floats.forEach(function (f, i) {
+      setters.push({
+        x: gsap.quickTo(f, 'x', { duration: 0.7, ease: 'power3.out' }),
+        y: gsap.quickTo(f, 'y', { duration: 0.7, ease: 'power3.out' }),
+        depth: (i + 1) * 14
+      });
+    });
+
     hero.addEventListener('mousemove', function (e) {
-      if (!heroRect) return;
-      // -1 to 1 normalized cursor position relative to hero center
-      mx = ((e.clientX - heroRect.left) / heroRect.width - 0.5) * 2;
-      my = ((e.clientY - heroRect.top) / heroRect.height - 0.5) * 2;
-      if (!ticking) {
-        ticking = true;
-        requestAnimationFrame(function () {
-          floats.forEach(function (f, i) {
-            var depth = (i + 1) * 12; // each shape moves a bit more
-            f.style.transform = 'translate(' + (mx * depth) + 'px, ' + (my * depth) + 'px)';
-          });
-          ticking = false;
-        });
-      }
+      var mx = ((e.clientX - heroRect.left) / heroRect.width - 0.5) * 2;
+      var my = ((e.clientY - heroRect.top) / heroRect.height - 0.5) * 2;
+      setters.forEach(function (s) {
+        s.x(mx * s.depth);
+        s.y(my * s.depth);
+      });
     });
 
     hero.addEventListener('mouseleave', function () {
-      floats.forEach(function (f) { f.style.transform = ''; });
+      setters.forEach(function (s) { s.x(0); s.y(0); });
     });
   }
 
