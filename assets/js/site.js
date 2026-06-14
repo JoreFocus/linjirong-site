@@ -46,36 +46,41 @@
   // ---- Mouse-driven effects (skip on touch / reduced motion) ----
   if (reduceMotion || coarse) return;
 
-  // 1) Hero parallax — float shapes follow mouse via gsap.quickTo (smooth, single owner of transform)
+  // 1) Hero parallax — float shapes follow mouse via manual rAF lerp (owns transform fully)
   var hero = document.querySelector('.hero');
   var floats = hero ? hero.querySelectorAll('.float') : [];
-  if (hero && floats.length && window.gsap) {
+  if (hero && floats.length) {
     var heroRect = hero.getBoundingClientRect();
     function updateHeroRect() { heroRect = hero.getBoundingClientRect(); }
     window.addEventListener('resize', updateHeroRect);
     window.addEventListener('scroll', updateHeroRect, { passive: true });
 
-    var setters = [];
+    var floatStates = [];
     floats.forEach(function (f, i) {
-      setters.push({
-        x: gsap.quickTo(f, 'x', { duration: 0.7, ease: 'power3.out' }),
-        y: gsap.quickTo(f, 'y', { duration: 0.7, ease: 'power3.out' }),
-        depth: (i + 1) * 14
-      });
+      // preserve any baked-in rotation (e.g. f3 has rotate(15deg) in CSS)
+      var rot = f.classList.contains('f3') ? 15 : 0;
+      f.style.transform = 'translate3d(0,0,0) rotate(' + rot + 'deg)';
+      floatStates.push({ el: f, tx: 0, ty: 0, cx: 0, cy: 0, depth: (i + 1) * 14, rot: rot });
     });
 
+    var targetMx = 0, targetMy = 0;
     hero.addEventListener('mousemove', function (e) {
-      var mx = ((e.clientX - heroRect.left) / heroRect.width - 0.5) * 2;
-      var my = ((e.clientY - heroRect.top) / heroRect.height - 0.5) * 2;
-      setters.forEach(function (s) {
-        s.x(mx * s.depth);
-        s.y(my * s.depth);
-      });
+      targetMx = ((e.clientX - heroRect.left) / heroRect.width - 0.5) * 2;
+      targetMy = ((e.clientY - heroRect.top) / heroRect.height - 0.5) * 2;
     });
+    hero.addEventListener('mouseleave', function () { targetMx = 0; targetMy = 0; });
 
-    hero.addEventListener('mouseleave', function () {
-      setters.forEach(function (s) { s.x(0); s.y(0); });
-    });
+    (function floatTick() {
+      for (var i = 0; i < floatStates.length; i++) {
+        var s = floatStates[i];
+        s.tx = targetMx * s.depth;
+        s.ty = targetMy * s.depth;
+        s.cx += (s.tx - s.cx) * 0.08;
+        s.cy += (s.ty - s.cy) * 0.08;
+        s.el.style.transform = 'translate3d(' + s.cx.toFixed(2) + 'px,' + s.cy.toFixed(2) + 'px,0) rotate(' + s.rot + 'deg)';
+      }
+      requestAnimationFrame(floatTick);
+    })();
   }
 
   // 2) Magnetic links — nav links and more-links pull toward cursor
